@@ -1,12 +1,12 @@
  import Routing from "./components/Routing";
  import Footer from "./components/Footer";
- import Navbar from "./components/Navbar";
+ import NavbarComp from "./components/NavbarComponent";
  import "bootstrap/dist/css/bootstrap.min.css";
 const App = () => {
   
   return (
     <>
-      <Navbar/>
+      <NavbarComp/>
       <Routing/>
       <Footer/>
     </>
