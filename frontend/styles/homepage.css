@@ -13,3 +13,12 @@
 #margin-right-remove {
   margin-right: 0;
 }
+
+.animation {
+  transition-duration: .01s;
+  transition-property: transform
+}
+
+.animation:active,.animation:focus,.animation:hover {
+  transform: scale(1.1)
+}

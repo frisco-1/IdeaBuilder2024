@@ -62,7 +62,7 @@ export default function TopSellers() {
 
   const ListSellers = TopSellers.map((product =>
     <Col xxl={2} xl={3} lg={4} md={6} sm={6} xs={6} key={product.id} >
-        <Card as={Link} to={product.url} className='top-seller'>
+        <Card as={Link} to={product.url} className='top-seller animation'>
           <img src={product.pic} alt={product.name} width={'100%'}/>
           <h5 className='d-flex text-center align-content-center justify-content-center'key={product.id}>{product.name}</h5>
         </Card>
