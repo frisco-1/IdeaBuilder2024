@@ -10,6 +10,7 @@ import Invoices from '../pages/Invoices';
 import PocketFolders from '../pages/PocketFolders';
 import Recordatorios from '../pages/Recordatorios';
 import Tickets from '../pages/Tickets';
+import Banners from '../pages/Banners';
 
 export default function Routing() {
   return (
@@ -25,6 +26,7 @@ export default function Routing() {
           <Route path='/pocket-folders' element={<PocketFolders/>}/>
           <Route path='/recordatorios' element={<Recordatorios/>}/>
           <Route path='/tickets' element ={<Tickets/>} />
+          <Route path='/banners' element={<Banners/>}/>
         </Routes>
     </>
   )

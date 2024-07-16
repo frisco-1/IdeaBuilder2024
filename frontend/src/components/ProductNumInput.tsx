@@ -1,9 +1,11 @@
 import React from 'react'
 import {Container, Row, Col, Form, Breadcrumb} from 'react-bootstrap';
 import {Link, useLocation} from 'react-router-dom';
+import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
 
 
-export default function ProductDisplayList(props) {
+
+export default function ProductNumInput(props) {
 
   const location = useLocation();
 
@@ -11,7 +13,7 @@ export default function ProductDisplayList(props) {
     <>
       <Container>
         <Breadcrumb>
-          <Breadcrumb.Item as={Link} to='/'>Home</Breadcrumb.Item>
+          <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
           <Breadcrumb.Item active>{props.displayName}</Breadcrumb.Item>
         </Breadcrumb>
         
@@ -39,6 +41,12 @@ export default function ProductDisplayList(props) {
                   <option key={index} value={option.value}>{option.label}</option>
                 ))}
               </Form.Select>
+            </Form.Group>
+            
+            <Form.Group>
+              <Form.Label>Size:</Form.Label>
+              <NumberInput
+              />
             </Form.Group>
 
             <Form.Group>

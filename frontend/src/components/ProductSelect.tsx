@@ -3,7 +3,7 @@ import {Container, Row, Col, Form, Breadcrumb} from 'react-bootstrap';
 import {Link, useLocation} from 'react-router-dom';
 
 
-export default function ProductDisplayList(props) {
+export default function ProductDisplay(props) {
 
   const location = useLocation();
 
