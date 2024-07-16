@@ -1,0 +1,15 @@
+.top-seller.card {
+  background-color: red;
+  border: #008ecb;
+  padding: 10px;
+  margin: 10px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  overflow: hidden;
+  position: relative;
+}
+
+
+#margin-right-remove {
+  margin-right: 0;
+}

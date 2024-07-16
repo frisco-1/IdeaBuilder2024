@@ -1,5 +1,5 @@
 import React from 'react'
-import {Col} from 'react-bootstrap';
+import {Card, Col, Container, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
 export default function TopSellers() {
@@ -61,18 +61,24 @@ export default function TopSellers() {
   ]
 
   const ListSellers = TopSellers.map((product =>
-    <Col md={4} key={product.id}>
-      <Link to={product.url}>
-        <img src={product.pic} alt={product.name} width={'100%'}/>
-        <h5 className='d-flex text-center align-content-center justify-content-center'key={product.id}>{product.name}</h5>
-      </Link>
+    <Col xxl={2} xl={3} lg={4} md={6} sm={6} xs={6} key={product.id} >
+        <Card as={Link} to={product.url} className='top-seller'>
+          <img src={product.pic} alt={product.name} width={'100%'}/>
+          <h5 className='d-flex text-center align-content-center justify-content-center'key={product.id}>{product.name}</h5>
+        </Card>
     </Col>
   )) 
 
   return (
     <>
-      <h3>Top Sellers</h3>
-      {ListSellers}
+      <h3 className='p-3 d-flex'>Top Sellers</h3>
+      
+      
+      <Row>
+        {ListSellers}
+      </Row>
+      
+      
     </>
   )
 }
