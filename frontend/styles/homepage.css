@@ -15,10 +15,10 @@
 }
 
 .animation {
-  transition-duration: .01s;
+  transition-duration: .2s;
   transition-property: transform
 }
 
 .animation:active,.animation:focus,.animation:hover {
-  transform: scale(1.1)
+  transform: scale(1.25)
 }
