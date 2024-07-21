@@ -8,8 +8,8 @@ export default function Invoices() {
   const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState(null);
   const [productCode, setProductCode] = useState('');
-  const [ncrNumbering, setNcrNumbering] = useState(false);
-  const [bookletStyle, setBookletStyle] = useState(false);
+  const [ncrNumbering, setNcrNumbering] = useState(false); //checkboxes
+  const [bookletStyle, setBookletStyle] = useState(false); //checkboxes
 
   useEffect(() => {
     axios.get('http://localhost:4000/invoices')

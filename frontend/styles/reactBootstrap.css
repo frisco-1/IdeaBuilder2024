@@ -5,3 +5,36 @@
   background-color: red;
 }
 
+.numSizing {
+  margin: 5px;
+  width: 100%;
+  max-width: 100px;
+}
+
+#footerLink {
+  color: white;
+}
+#footerLink:link {
+  text-decoration: none;
+  color: white;
+}
+#footerLink:hover{
+  color: rgb(19, 4, 4);
+    -webkit-transition: 0.2s ease-in;
+    transition: 0.2s ease-in;
+    text-decoration: none;
+}
+#black{
+  color: black;
+}
+#white {
+  color: white;
+}
+
+.react-icon {
+  font-size: 50px;
+}
+
+li:link {
+  text-decoration: none;
+}

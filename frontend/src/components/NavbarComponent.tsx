@@ -8,14 +8,15 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link } from 'react-router-dom';
 import { FaPhoneAlt } from "react-icons/fa";
-import '../../styles/reactBootstrap.css'
+
 
 export default function NavbarComp() {
   return (
     <>
       <Navbar className="bg-black navbar-dark navbar-light" expand={'md'} variant='light' sticky='top' >
         <Container fluid>
-          <Navbar.Brand href="/"><img src="./img/ib logo.PNG" alt="Idea Builder Logo" width={'100px'} height={'auto'}/> Idea Builder</Navbar.Brand>
+          <Navbar.Brand href="/"><img src="./img/ib logo.PNG" alt="Idea Builder Logo" width={'100px'} height={'auto'}/></Navbar.Brand>
+          <h1 id='white'>Idea Builder</h1>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-`} />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-`}

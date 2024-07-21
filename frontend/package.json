@@ -11,7 +11,9 @@
   },
   "proxy": "http://localhost:4000",
   "dependencies": {
+    "@emotion/core": "^11.0.0",
     "@mui/base": "^5.0.0-beta.40",
+    "@types/lodash.isnumber": "^3.0.9",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "react": "^18.2.0",

@@ -11,7 +11,7 @@ export default function ProductDisplay(props) {
     <>
       <Container>
         <Breadcrumb>
-          <Breadcrumb.Item as={Link} to='/'>Home</Breadcrumb.Item>
+          <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
           <Breadcrumb.Item active>{props.displayName}</Breadcrumb.Item>
         </Breadcrumb>
         
@@ -76,7 +76,7 @@ export default function ProductDisplay(props) {
             }
 
           </Form>
-          <h3 className='position-absolute'>Printing Cost: ${props.price}</h3>
+          <h3 className='mt-3'>Printing Cost: ${props.price}</h3>
         </Col>
 
         </Row>

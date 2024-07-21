@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ProductDisplay from '../components/ProductSelect';
+import TicketQuantity from '../components/TicketPage/TicketQuantity';
 
 export default function Tickets() {
   const [product, setProduct] = useState([]);
-  const [type, setType] = useState('');
   const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState(null);
-  const [productCode, setProductCode] = useState('');
+  const [designFee, setDesignFee] = useState(false); //it's for the checkbox
 
   useEffect(() => {
     axios.get('http://localhost:4000/tickets')
@@ -15,45 +14,39 @@ export default function Tickets() {
       .catch(err => console.error(err));
   }, []);
 
-  const handleTypeChange = (e) => {
-    const selectedType = e.target.value;
-    setType(selectedType);
-    setQuantity(''); // Reset Quantity when type changes
-    setPrice(null); // Reset price when type changes
-    const selectedProduct = product.find(card => card.name === selectedType);
-    setProductCode(selectedProduct?.code || '');
-  };
-
   const handleQuantityChange = (e) => {
     const selectedQuantity = e.target.value;
     setQuantity(selectedQuantity);
-    const selectedProduct = product.find(card => card.name === type);
-    const selectedOrder = selectedProduct?.order.find(order => order.quantity === parseInt(selectedQuantity));
-    setPrice(selectedOrder?.price !== null ? selectedOrder.price : 'N/A');
+
+    const selectedProduct = product.find(p => p.quantity === parseInt(selectedQuantity));
+    setPrice(selectedProduct ? selectedProduct.price : null);
   };
 
-  const typeOptions = product.map((card) => card.name)
-    .filter((v, i, a) => a.indexOf(v) === i)
-    .map((type) => ({ label: type, value: type }));
+  const quantityOptions = product.map(p => ({ label: p.quantity, value: p.quantity }));
 
-  const quantityOptions = product.filter(card => card.name === type)
-    .flatMap(card => card.order)
-    .map(order => order.quantity)
-    .filter((v, i, a) => a.indexOf(v) === i)
-    .map((quantity) => ({ label: quantity, value: quantity }));
+  const handleCheckboxChange = (e) => {
+    const {id, checked } = e.target;
+    if (id === 'designFee'){
+      setDesignFee(checked);
+    }
+  }
+
+  const calculateTotalPrice = () => {
+    let totalPrice = price || 0;
+    if (designFee) totalPrice += 45;
+    return totalPrice;
+  };
 
   return (
-    <ProductDisplay
+    <TicketQuantity
       displayName='Tickets'
       displayCode='(TIC)'
-      type={type}
-      typeOptions={typeOptions}
-      handleTypeChange={handleTypeChange}
       quantity={quantity}
       quantityOptions={quantityOptions}
       handleQuantityChange={handleQuantityChange}
-      price={price}
-      productCode={productCode}
+      price={calculateTotalPrice()}
+      designFee={designFee}
+      handleCheckboxChange={handleCheckboxChange}
     />
   );
 }

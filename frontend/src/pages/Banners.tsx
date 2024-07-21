@@ -3,57 +3,54 @@ import axios from 'axios';
 import ProductNumInput from '../components/ProductNumInput';
 
 export default function Banners() {
-  const [businessCards, setBusinessCards] = useState([]);
-  const [type, setType] = useState('');
-  const [quantity, setQuantity] = useState('');
+  const [length, setLength] = useState('');
+  const [width, setWidth] = useState('');
+  const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(null);
-  const [productCode, setProductCode] = useState('');
+  const area = width * length;
 
   useEffect(() => {
-    axios.get('http://localhost:4000/business_cards')
-      .then(res => setBusinessCards(res.data))
-      .catch(err => console.error(err));
-  }, []);
+    let newPrice = 0;
+    if (area >=10 && area <= 30) {
+      newPrice = area * 6.5;
+    }
+    else if (area == 8)
+    {
+      newPrice = area * 10;
+    }
+    else if (area >= 31 && area <= 70) {
+      newPrice = area * 4.25;
+    }
+    else if(area >= 71) {
+      newPrice = area * 3;
+    }
+    setPrice(newPrice * quantity);
+  }, [area, quantity]);
 
-  const handleTypeChange = (e) => {
-    const selectedType = e.target.value;
-    setType(selectedType);
-    setQuantity(''); // Reset Quantity when type changes
-    setPrice(null); // Reset price when type changes
-    const selectedProduct = businessCards.find(card => card.name === selectedType);
-    setProductCode(selectedProduct?.code || '');
-  };
+  const handleLengthChange = (e) => {
+    setLength(e.target.value);
+  }
+
+  const handleWidthChange = (e) => {
+    setWidth(e.target.value);
+  }
 
   const handleQuantityChange = (e) => {
-    const selectedQuantity = e.target.value;
-    setQuantity(selectedQuantity);
-    const selectedProduct = businessCards.find(card => card.name === type);
-    const selectedOrder = selectedProduct?.order.find(order => order.quantity === parseInt(selectedQuantity));
-    setPrice(selectedOrder?.price !== null ? selectedOrder.price : 'N/A');
-  };
-
-  const typeOptions = businessCards.map((card) => card.name)
-    .filter((v, i, a) => a.indexOf(v) === i)
-    .map((type) => ({ label: type, value: type }));
-
-  const quantityOptions = businessCards.filter(card => card.name === type)
-    .flatMap(card => card.order)
-    .map(order => order.quantity)
-    .filter((v, i, a) => a.indexOf(v) === i)
-    .map((quantity) => ({ label: quantity, value: quantity }));
+    setQuantity(e.target.value)
+  }
 
   return (
     <ProductNumInput
       displayName='Banners'
-      displayCode='Banners'
-      type={type}
-      typeOptions={typeOptions}
-      handleTypeChange={handleTypeChange}
+      displayCode='BAN'
+      length={length}
+      width={width}
       quantity={quantity}
-      quantityOptions={quantityOptions}
-      handleQuantityChange={handleQuantityChange}
+      area={area}
       price={price}
-      productCode={productCode}
+      handleLengthChange={handleLengthChange}
+      handleWidthChange={handleWidthChange}
+      handleQuantityChange={handleQuantityChange}
     />
   );
 }
