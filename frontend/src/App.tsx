@@ -2,7 +2,7 @@
  import Footer from "./components/Footer";
  import NavbarComp from "./components/NavbarComponent";
  import "bootstrap/dist/css/bootstrap.min.css";
- import '../../styles/reactBootstrap.css'
+ import '../styles/reactBootstrap.css'
 const App = () => {
   
   return (
