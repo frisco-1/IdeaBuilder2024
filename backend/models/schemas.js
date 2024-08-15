@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
-
+// Product schema is the same for most products. Some specific products have additional fields that rerquire a different schema.
 const orderSchema = new Schema({
   quantity: {
     type: Number, 
