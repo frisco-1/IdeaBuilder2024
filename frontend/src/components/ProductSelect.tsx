@@ -22,7 +22,7 @@ export default function ProductDisplay(props) {
         <Row>
 
           <Col md={6} className='p-3'>
-            <img src="" alt={props.type} width={'100%'}/>
+            <img src={props.image} alt={props.type} width={'100%'}/>
           </Col>
 
 

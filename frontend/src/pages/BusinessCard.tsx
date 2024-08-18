@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductDisplay from '../components/ProductSelect';
 
@@ -8,6 +8,7 @@ export default function BusinessCard() {
   const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState(null);
   const [productCode, setProductCode] = useState('');
+  const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
     axios.get('http://localhost:4000/business_cards')
@@ -22,6 +23,7 @@ export default function BusinessCard() {
     setPrice(null); // Reset price when type changes
     const selectedProduct = businessCards.find(card => card.name === selectedType);
     setProductCode(selectedProduct?.code || '');
+    setImage(selectedProduct?.image || './img/No-Product-Selected.png');
   };
 
   const handleQuantityChange = (e) => {
@@ -54,6 +56,7 @@ export default function BusinessCard() {
       handleQuantityChange={handleQuantityChange}
       price={price}
       productCode={productCode}
+      image={image}
     />
   );
 }
