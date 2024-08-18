@@ -7,7 +7,7 @@ export default function Banners() {
   const [width, setWidth] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(null);
-  const image = 'https://via.placeholder.com/300x300';
+  const image = './img/Product-Pages/Banners/Banners.png';
   const area = width * length;
 
   useEffect(() => {
@@ -52,6 +52,7 @@ export default function Banners() {
       handleLengthChange={handleLengthChange}
       handleWidthChange={handleWidthChange}
       handleQuantityChange={handleQuantityChange}
+      image={image}
     />
   );
 }
