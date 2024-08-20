@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import TicketQuantity from '../components/TicketPage/TicketQuantity';
+import TicketQuantity from '../components/ForTicketPage/TicketQuantity';
 
 export default function Tickets() {
   const [product, setProduct] = useState([]);
   const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState(null);
   const [designFee, setDesignFee] = useState(false); //it's for the checkbox
+  const image = './img/Product-Pages/Tickets/Tickets.png';
 
   useEffect(() => {
     axios.get('http://localhost:4000/tickets')
@@ -47,6 +48,7 @@ export default function Tickets() {
       price={calculateTotalPrice()}
       designFee={designFee}
       handleCheckboxChange={handleCheckboxChange}
+      image={image}
     />
   );
 }

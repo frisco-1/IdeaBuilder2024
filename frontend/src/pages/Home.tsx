@@ -1,8 +1,8 @@
 import React from 'react'
-import HomePageCarousel from '../components/HomePage/HomePageCarousel';
-import ProductListBar from '../components/HomePage/ProductListBar';
+import HomePageCarousel from '../components/ForHomePage/HomePageCarousel';
+import ProductListBar from '../components/ForHomePage/ProductListBar';
 import {Row, Col} from 'react-bootstrap'; 
-import TopSellers from '../components/HomePage/TopSellers';
+import TopSellers from '../components/ForHomePage/TopSellers';
 import '../../styles/homepage.css';
 
 export default function Home() {
