@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductDisplay from '../components/ProductSelect';
+
+interface DoorHanger {
+  name: string;
+  code: string;
+  order: {
+    quantity: number;
+    price: number | null;
+  }[];
+}
 
 export default function DoorHangers() {
   const [doorHangers, setDoorHangers] = useState([]);
   const [type, setType] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [price, setPrice] = useState(null);
+  const [price, setPrice] = useState(0);
   const [productCode, setProductCode] = useState('');
 
   useEffect(() => {
@@ -15,11 +24,11 @@ export default function DoorHangers() {
       .catch(err => console.error(err));
   }, []);
 
-  const handleTypeChange = (e) => {
+  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedType = e.target.value;
     setType(selectedType);
     setQuantity(''); // Reset Quantity when type changes
-    setPrice(null); // Reset price when type changes
+    setPrice(0); // Reset price when type changes
     const selectedProduct = doorHangers.find(card => card.name === selectedType);
     setProductCode(selectedProduct?.code || '');
   };
