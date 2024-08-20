@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
+
 import ProductNumInput from '../components/ProductNumInput';
 
 export default function Banners() {
-  const [length, setLength] = useState('');
-  const [width, setWidth] = useState('');
+  const [length, setLength] = useState<number>(0);
+  const [width, setWidth] = useState<number>(0);
   const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState(null);
+  const [price, setPrice] = useState(0);
   const image = './img/Product-Pages/Banners/Banners.png';
-  const area = width * length;
+  const area = Number(width) * Number(length);
 
   useEffect(() => {
     let newPrice = 0;
@@ -28,31 +28,33 @@ export default function Banners() {
     setPrice(newPrice * quantity);
   }, [area, quantity]);
 
-  const handleLengthChange = (e) => {
-    setLength(e.target.value);
+  const handleLengthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLength(Number(e.target.value));
   }
 
-  const handleWidthChange = (e) => {
-    setWidth(e.target.value);
+  const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setWidth(Number(e.target.value));
   }
 
-  const handleQuantityChange = (e) => {
-    setQuantity(e.target.value)
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuantity(Number(e.target.value));
   }
 
   return (
-    <ProductNumInput
-      displayName='Banners'
-      displayCode='BAN'
-      length={length}
-      width={width}
-      quantity={quantity}
-      area={area}
-      price={price}
-      handleLengthChange={handleLengthChange}
-      handleWidthChange={handleWidthChange}
-      handleQuantityChange={handleQuantityChange}
-      image={image}
-    />
-  );
+      <ProductNumInput
+        displayName='Banners'
+        displayCode='BAN'
+        type='banner'
+        productCode='BAN'
+        length={length}
+        width={width}
+        quantity={quantity}
+        area={area}
+        price={price}
+        handleLengthChange={handleLengthChange}
+        handleWidthChange={handleWidthChange}
+        handleQuantityChange={handleQuantityChange}
+        image={image}
+      />
+    );
 }

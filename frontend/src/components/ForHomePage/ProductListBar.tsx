@@ -1,4 +1,4 @@
-import React from 'react'
+
 import {PRODUCTS as Products} from './productListData.tsx';
 import { ListGroup } from 'react-bootstrap';
 import {Link} from 'react-router-dom';

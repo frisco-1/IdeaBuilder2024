@@ -1,11 +1,25 @@
 import React from 'react'
 import {Container, Row, Col, Form, Breadcrumb} from 'react-bootstrap';
-import {Link, useLocation} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import '../../styles/reactBootstrap.css';
 
+type ProductNumInputProps = {
+  displayName: string;
+  displayCode: string;
+  image: string;
+  type: string;
+  productCode: string;
+  length: number;
+  width: number;
+  area: number;
+  handleLengthChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleWidthChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleQuantityChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  quantity: number;
+  price: number;
+};
 
-
-export default function ProductNumInput(props) {
+export default function ProductNumInput(props: ProductNumInputProps) {
 
   const location = useLocation();
 

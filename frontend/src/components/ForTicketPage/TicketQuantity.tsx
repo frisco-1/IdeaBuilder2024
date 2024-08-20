@@ -2,7 +2,19 @@ import React from 'react';
 import { Container, Row, Col, Form, Breadcrumb } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function TicketQuantity(props) {
+interface TicketQuantityProps {
+  displayName: string;
+  displayCode: string;
+  image: string;
+  quantity: string;
+  handleQuantityChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  quantityOptions: { value: string; label: string }[];
+  designFee: boolean;
+  handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  price: number;
+}
+
+export default function TicketQuantity(props: TicketQuantityProps) {
   return (
     <>
       <Container>

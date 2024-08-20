@@ -1,9 +1,25 @@
-import React from 'react'
-import {Container, Row, Col, Form, Breadcrumb} from 'react-bootstrap';
-import {Link, useLocation} from 'react-router-dom';
+import React from 'react';
+import { Container, Row, Col, Form, Breadcrumb } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
+interface ProductDisplayProps {
+  displayName: string;
+  displayCode: string;
+  image: string;
+  type: string;
+  handleTypeChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  quantity: string;
+  handleQuantityChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  typeOptions: { value: string; label: string }[];
+  quantityOptions: { value: string; label: string }[];
+  productCode: string;
+  ncrNumbering: boolean;
+  bookletStyle: boolean;
+  handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  price: number;
+}
 
-export default function ProductDisplay(props) {
+export default function ProductDisplay(props: ProductDisplayProps) {
 
   const location = useLocation();
 
