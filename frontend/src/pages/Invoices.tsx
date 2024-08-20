@@ -10,6 +10,7 @@ export default function Invoices() {
   const [productCode, setProductCode] = useState('');
   const [ncrNumbering, setNcrNumbering] = useState(false); //checkboxes
   const [bookletStyle, setBookletStyle] = useState(false); //checkboxes
+  const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
     axios.get('http://localhost:4000/invoices')
@@ -24,6 +25,7 @@ export default function Invoices() {
     setPrice(null); // Reset price when type changes
     const selectedProduct = product.find(card => card.name === selectedType);
     setProductCode(selectedProduct?.code || '');
+    setImage(selectedProduct?.image || './img/No-Product-Selected.png');
   };
 
   const handleQuantityChange = (e) => {
@@ -75,6 +77,7 @@ export default function Invoices() {
       ncrNumbering={ncrNumbering}
       bookletStyle={bookletStyle}
       handleCheckboxChange={handleCheckboxChange}
+      image={image}
     />
   );
 }

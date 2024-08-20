@@ -8,6 +8,7 @@ export default function Flyers() {
   const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState(null);
   const [productCode, setProductCode] = useState('');
+  const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
     axios.get('http://localhost:4000/flyers')
@@ -22,6 +23,7 @@ export default function Flyers() {
     setPrice(null); // Reset price when type changes
     const selectedProduct = flyers.find(card => card.name === selectedType);
     setProductCode(selectedProduct?.code || '');
+    setImage (selectedProduct?.image || './img/No-Product-Selected.png');
   };
 
   const handleQuantityChange = (e) => {
@@ -54,6 +56,7 @@ export default function Flyers() {
       handleQuantityChange={handleQuantityChange}
       price={price}
       productCode={productCode}
+      image={image}
     />
   );
 }
