@@ -52,7 +52,7 @@ export default function BusinessCard() {
     .flatMap(card => card.order)
     .map(order => order.quantity)
     .filter((v, i, a) => a.indexOf(v) === i)
-    .map((quantity) => ({ label: String(quantity), value: String(quantity) }));
+    .map((quantity) => ({ label: quantity.toString(), value: quantity.toString() }));
 
   return (
       <ProductDisplay

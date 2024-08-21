@@ -1,12 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductDisplay from '../components/ProductSelect';
 
+interface Flyers {
+  name: string;
+  code: string;
+  image: string;
+  order: {
+    quantity: number;
+    price: number | string;
+  }[];
+}
+
+
 export default function Flyers() {
-  const [flyers, setFlyers] = useState([]);
+  const [flyers, setFlyers] = useState<Flyers[]>([]);
   const [type, setType] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [price, setPrice] = useState(null);
+  const [price, setPrice] = useState(0);
   const [productCode, setProductCode] = useState('');
   const [image, setImage] = useState('./img/No-Product-Selected.png');
 
@@ -16,22 +27,22 @@ export default function Flyers() {
       .catch(err => console.error(err));
   }, []);
 
-  const handleTypeChange = (e) => {
+  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedType = e.target.value;
     setType(selectedType);
     setQuantity(''); // Reset Quantity when type changes
-    setPrice(null); // Reset price when type changes
+    setPrice(0); // Reset price when type changes
     const selectedProduct = flyers.find(card => card.name === selectedType);
     setProductCode(selectedProduct?.code || '');
     setImage (selectedProduct?.image || './img/No-Product-Selected.png');
   };
 
-  const handleQuantityChange = (e) => {
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedQuantity = e.target.value;
     setQuantity(selectedQuantity);
     const selectedProduct = flyers.find(card => card.name === type);
     const selectedOrder = selectedProduct?.order.find(order => order.quantity === parseInt(selectedQuantity));
-    setPrice(selectedOrder?.price !== null ? selectedOrder.price : 'N/A');
+     setPrice(selectedOrder?.price !== undefined && selectedOrder?.price !== 0 ? Number(selectedOrder.price) : 0);
   };
 
   const typeOptions = flyers.map((card) => card.name)
@@ -42,7 +53,7 @@ export default function Flyers() {
     .flatMap(card => card.order)
     .map(order => order.quantity)
     .filter((v, i, a) => a.indexOf(v) === i)
-    .map((quantity) => ({ label: quantity, value: quantity }));
+    .map((quantity) => ({ label: quantity.toString(), value: quantity.toString() }));
 
   return (
     <ProductDisplay
@@ -57,6 +68,9 @@ export default function Flyers() {
       price={price}
       productCode={productCode}
       image={image}
+      ncrNumbering={false}
+      bookletStyle={false}
+      handleCheckboxChange={() => {}}
     />
   );
 }
