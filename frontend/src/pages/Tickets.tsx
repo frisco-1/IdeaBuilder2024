@@ -2,10 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TicketQuantity from '../components/ForTicketPage/TicketQuantity';
 
+interface Tickets {
+  code: string;
+  quantity: number;
+  price: number;
+}
+
 export default function Tickets() {
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState<Tickets[]>([]);
   const [quantity, setQuantity] = useState('');
-  const [price, setPrice] = useState(null);
+  const [price, setPrice] = useState(0);
   const [designFee, setDesignFee] = useState(false); //it's for the checkbox
   const image = './img/Product-Pages/Tickets/Tickets.png';
 
@@ -15,17 +21,17 @@ export default function Tickets() {
       .catch(err => console.error(err));
   }, []);
 
-  const handleQuantityChange = (e) => {
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedQuantity = e.target.value;
     setQuantity(selectedQuantity);
 
     const selectedProduct = product.find(p => p.quantity === parseInt(selectedQuantity));
-    setPrice(selectedProduct ? selectedProduct.price : null);
+    setPrice(selectedProduct ? selectedProduct.price : 0);
   };
 
-  const quantityOptions = product.map(p => ({ label: p.quantity, value: p.quantity }));
+  const quantityOptions = product.map((quantity) => ({ label: quantity.toString(), value: quantity.toString() }));
 
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {id, checked } = e.target;
     if (id === 'designFee'){
       setDesignFee(checked);
