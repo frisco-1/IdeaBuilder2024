@@ -1,5 +1,6 @@
 import {Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home';
+import SearchPage from '../pages/SearchPage';
 import BusinessCard from '../pages/BusinessCard';
 import Flyers from '../pages/Flyers';
 import DoorHangers from '../pages/DoorHangers';
@@ -11,11 +12,13 @@ import Recordatorios from '../pages/Recordatorios';
 import Tickets from '../pages/Tickets';
 import Banners from '../pages/Banners';
 
+
 export default function Routing() {
   return (
     <>
         <Routes>
           <Route path='/' element={<Home/>} />
+          <Route path='/search' element={<SearchPage/>} />
           <Route path='/business-cards' element={<BusinessCard/>}/>
           <Route path='/flyers' element={<Flyers/>}/>
           <Route path='/door-hangers' element={<DoorHangers/>}/>

@@ -1,4 +1,6 @@
 
+import {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -11,6 +13,14 @@ import { FaPhoneAlt } from "react-icons/fa";
 
 
 export default function NavbarComp() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearchSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    navigate(`/search?query=${searchQuery}`);
+  };
+
   return (
     <>
       <Navbar className="bg-black navbar-dark navbar-light" expand={'md'} variant='light' sticky='top' >
@@ -47,12 +57,14 @@ export default function NavbarComp() {
                 </NavDropdown>
                 <Nav.Link as={Link} to='/contact'><FaPhoneAlt /> Contact Us</Nav.Link>
               </Nav>
-              <Form className="d-flex">
+              <Form className="d-flex" onSubmit={handleSearchSubmit}>
                 <Form.Control
                   type="search"
                   placeholder="Search"
                   className="me-2"
                   aria-label="Search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
                 />
                 <Button variant="outline-success">Search</Button>
               </Form>
