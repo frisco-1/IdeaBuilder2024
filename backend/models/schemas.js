@@ -93,6 +93,33 @@ const bookletSchema = new Schema({
 
 const Booklets = mongoose.model('Booklets', bookletSchema, 'booklets');
 
+//INVITATIONS SCHEMA
+// Main schema for invitations
+const invitationSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  code: {
+    type: String,
+    required: true,
+  },
+  order: {
+    type: [orderSchema],
+    required: true,
+  },
+  envelopeFee: {
+    type: Number,
+    required: false,
+  },
+  extraQuantityFee: {
+    type: Number,
+    required: false,
+  }
+});
+
+const Invitation = mongoose.model('Invitations', invitationSchema, 'invitations');
+
 
 const mySchemas = {
 
@@ -106,6 +133,7 @@ const mySchemas = {
   'Recordatorios' : Recordatorios,
   'Tickets': Tickets,
   'Booklets': Booklets,
+  'Invitations': Invitation,
 
 }
 module.exports = mySchemas;

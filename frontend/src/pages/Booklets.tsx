@@ -42,12 +42,20 @@ export default function Booklets() {
 
     const selectedProduct = booklets.find(booklet => booklet.name === type);
     if (selectedProduct) {
-      const pricingTier = selectedProduct.pricing.find(
-        tier => {
-          const [min, max] = tier.quantityRange.split('-').map(Number);
-          return max ? selectedQuantity >= min && selectedQuantity <= max : selectedQuantity >= min;
-        }
-      );
+      const pricingTier = selectedProduct.pricing.find(tier => {
+
+          const range = tier.quantityRange;
+          
+          if (range.includes('+')) {
+            // Handle open-ended ranges like "100+"
+            const min = parseInt(range);
+            return selectedQuantity >= min;
+          } else {
+            // Handle closed ranges like "25-49"
+            const [min, max] = range.split('-').map(Number);
+            return selectedQuantity >= min && selectedQuantity <= max;
+          }
+        });
       setPrice(pricingTier ? pricingTier.price * selectedQuantity : 0);
     }
   };
