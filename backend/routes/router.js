@@ -35,6 +35,7 @@ const routes = [
   'recordatorios',
   'booklets',
   'tickets',
+  'invitations',
 ];
 
 routes.forEach(route => {
