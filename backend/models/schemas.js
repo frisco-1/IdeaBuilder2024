@@ -41,6 +41,7 @@ const PocketFolders = mongoose.model('PocketFolders', productSchema, 'pocket_fol
 const Recordatorios = mongoose.model('Recordatorios', productSchema, 'recordatorios')
 
 
+//TICKET SCHEMA
 const ticketSchema = new Schema({
   code: {
     type: String, 
@@ -56,7 +57,42 @@ const ticketSchema = new Schema({
   }
 })
 
-const Tickets = mongoose.model('Tickets', ticketSchema, 'tickets')
+const Tickets = mongoose.model('Tickets', ticketSchema, 'tickets');
+
+//BOOKLET SCHEMA
+
+const pricingSchema = new Schema({
+  quantityRange: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+});
+
+const bookletSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  code: {
+    type: String,
+    required: true,
+  },
+  pricing: {
+    type: [pricingSchema],
+    required: true,
+  },
+  image: {
+    type: String,
+    required: false,
+  }
+});
+
+const Booklets = mongoose.model('Booklets', bookletSchema, 'booklets');
+
 
 const mySchemas = {
 
@@ -68,7 +104,8 @@ const mySchemas = {
   'Invoices' : Invoices,
   'PocketFolders' : PocketFolders,
   'Recordatorios' : Recordatorios,
-  'Tickets' : Tickets
+  'Tickets': Tickets,
+  'Booklets': Booklets,
 
 }
 module.exports = mySchemas;

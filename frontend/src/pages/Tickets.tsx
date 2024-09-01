@@ -16,10 +16,10 @@ export default function Tickets() {
   const image = './img/Product-Pages/Tickets/Tickets.png';
 
   useEffect(() => {
-    axios.get('http://localhost:4000/tickets')
-      .then(res => setProduct(res.data))
-      .catch(err => console.error(err));
-  }, []);
+  axios.get('http://localhost:4000/tickets')
+    .then(res => {setProduct(res.data);})
+    .catch(err => console.error(err));
+}, []);
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedQuantity = e.target.value;
@@ -29,7 +29,10 @@ export default function Tickets() {
     setPrice(selectedProduct ? selectedProduct.price : 0);
   };
 
-  const quantityOptions = product.map((quantity) => ({ label: quantity.toString(), value: quantity.toString() }));
+  const quantityOptions = product.map((ticket) => ({ 
+    label: ticket.quantity.toString(),
+    value: ticket.quantity.toString() 
+  }));
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {id, checked } = e.target;

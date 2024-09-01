@@ -33,6 +33,8 @@ const routes = [
   'invoices',
   'pocket_folders',
   'recordatorios',
+  'booklets',
+  'tickets',
 ];
 
 routes.forEach(route => {
@@ -43,15 +45,26 @@ routes.forEach(route => {
 
 
 
-router.get('/tickets', async (req, res) => {
- const tickets = schemas.Tickets
+// router.get('/tickets', async (req, res) => {
+//  const tickets = schemas.Tickets
 
- try {
-    const ticketData = await tickets.find({}).exec();
-    res.json(ticketData); // Use res.json to automatically set the Content-Type to application/json
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-})
+//  try {
+//     const ticketData = await tickets.find({}).exec();
+//     res.json(ticketData); // Use res.json to automatically set the Content-Type to application/json
+//   } catch (error) {
+//     res.status(500).send(error.message);
+//   }
+// })
+
+// router.get('/booklets', async (req, res) => {
+//   const booklets = schemas.Booklet
+
+//   try {
+//     const bookletData = await booklets.find({}).exec();
+//     res.json(bookletData); // Use res.json to automatically set the Content-Type to application/json
+//   } catch (error) {
+//     res.status(500).send(error.message);
+//   }
+// })
 
 module.exports = router;

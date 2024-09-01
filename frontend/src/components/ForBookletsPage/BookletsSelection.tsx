@@ -1,25 +1,29 @@
 import React from 'react';
 import { Container, Row, Col, Form, Breadcrumb } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
-interface TicketQuantityProps {
+interface BookletsNumselectProps {
   displayName: string;
   displayCode: string;
   image: string;
-  quantity: string;
-  handleQuantityChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  type: string;
+  handleTypeChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  quantity: number;
+  handleQuantityChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  typeOptions: { value: string; label: string }[];
   quantityOptions: { value: string; label: string }[];
-  designFee: boolean;
-  handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  productCode: string;
   price: number;
 }
 
-export default function TicketQuantity(props: TicketQuantityProps) {
+export default function BookletsNumselect(props: BookletsNumselectProps) {
+
+  
+
   return (
     <>
       <Container>
         <Breadcrumb>
-          <Breadcrumb.Item linkAs={Link} linkProps={{to: '/'}}>Home</Breadcrumb.Item>
+          <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
           <Breadcrumb.Item active>{props.displayName}</Breadcrumb.Item>
         </Breadcrumb>
         
@@ -29,30 +33,31 @@ export default function TicketQuantity(props: TicketQuantityProps) {
 
         <Row>
           <Col md={6} className='p-3'>
-            <img src={props.image} alt={props.displayName} width={'100%'}/>
+            <img src={props.image} alt={props.type} width={'100%'}/>
           </Col>
 
           <Col md={6} className='p-3 position-relative'>
             <h3>Configure & Price</h3>
             <hr />
+            <h4>Product Code: {props.productCode}</h4>
             <Form>
               <Form.Group>
-                <Form.Label>Quantity:</Form.Label>
-                <Form.Select value={props.quantity} onChange={props.handleQuantityChange}>
-                  <option value="">Select Quantity</option>
-                  {props.quantityOptions.map((option, index) => (
+                <Form.Label>Type:</Form.Label>
+                <Form.Select value={props.type} onChange={props.handleTypeChange}>
+                  <option value="">Select Type</option>
+                  {props.typeOptions.map((option, index) => (
                     <option key={index} value={option.value}>{option.label}</option>
                   ))}
                 </Form.Select>
               </Form.Group>
 
-              <Form.Group controlId='designFee'>
-                <Form.Check
-                  type='checkbox'
-                  label='Design $45'
-                  checked={props.designFee}
-                  onChange={props.handleCheckboxChange}
-                  className='mt-2'
+              <Form.Group>
+                <Form.Label>Quantity:</Form.Label>
+                <Form.Control
+                  type="number"
+                  value={props.quantity}
+                  onChange={props.handleQuantityChange}
+                  min={25} // Set the minimum value
                 />
               </Form.Group>
             </Form>
@@ -61,5 +66,5 @@ export default function TicketQuantity(props: TicketQuantityProps) {
         </Row>
       </Container>
     </>
-  );
+  )
 }
