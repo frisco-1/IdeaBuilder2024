@@ -35,59 +35,61 @@ export default function Invitations() {
     const selectedType = e.target.value;
     setType(selectedType);
     setQuantity(25); // Reset Quantity to minimum when type changes
-    setPrice(0); // Reset price when type changes
     const selectedProduct = invitations.find(invitation => invitation.name === selectedType);
     setProductCode(selectedProduct?.code || '');
     setImage(selectedProduct?.image || './img/No-Product-Selected.png');
     setEnvelopeFee(selectedProduct?.envelopeFee || 0);
     setExtraQuantityFee(selectedProduct?.extraQuantityFee || 0);
     setEnvelopeSelected(false); // Reset envelope selection when type changes
+    setPrice(calculateTotalPrice(selectedProduct, 25, false));
   };
 
- const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedQuantity = Number(e.target.value);
     setQuantity(selectedQuantity);
- 
+
     const selectedProduct = invitations.find(invitation => invitation.name === type);
     if (selectedProduct) {
-        // Get the base price for the closest quantity (25, 50, 100)
-        const order = selectedProduct.order.find(o => o.quantity === selectedQuantity) || selectedProduct.order[selectedProduct.order.length - 1];
-        const basePrice = order ? order.price : 0;
-
-        let totalPrice = basePrice;
-
-        // Calculate the additional fee for quantities over 100
-        if (selectedQuantity > 100) {
-            const extraQuantityCounter = Math.floor((selectedQuantity - 100) / 25);
-            totalPrice += extraQuantityCounter * selectedProduct.extraQuantityFee;
-        }
-
-        // Add the envelope fee if selected
-        if (envelopeSelected) {
-            totalPrice += selectedQuantity * selectedProduct.envelopeFee;
-        }
-
-        setPrice(totalPrice);
+        setPrice(calculateTotalPrice(selectedProduct, selectedQuantity, envelopeSelected));
     }
-};
+  };
 
-const handleEnvelopeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEnvelopeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isSelected = e.target.checked;
     setEnvelopeSelected(isSelected);
-};
 
-const calculateTotalPrice = () => {
     const selectedProduct = invitations.find(invitation => invitation.name === type);
-    let totalPrice = price || 0;
+    if (selectedProduct) {
+        setPrice(calculateTotalPrice(selectedProduct, quantity, isSelected));
+    }
+  };
 
-    if (selectedProduct && envelopeSelected) {
-        const envelopeCost = quantity * selectedProduct.envelopeFee;
-        totalPrice += envelopeCost;
+  const calculateTotalPrice = (
+    selectedProduct: Invitations | undefined,
+    selectedQuantity: number,
+    envelopeSelected: boolean
+  ) => {
+    if (!selectedProduct) return 0;
+
+    // Get the base price for the closest quantity (25, 50, 100)
+    const order = selectedProduct.order.find(o => o.quantity === selectedQuantity) || selectedProduct.order[selectedProduct.order.length - 1];
+    const basePrice = order ? order.price : 0;
+
+    let totalPrice = basePrice;
+
+    // Calculate the additional fee for quantities over 100
+    if (selectedQuantity > 100) {
+        const extraQuantityCounter = Math.floor((selectedQuantity - 100) / 25);
+        totalPrice += extraQuantityCounter * selectedProduct.extraQuantityFee;
+    }
+
+    // Add the envelope fee if selected
+    if (envelopeSelected) {
+        totalPrice += selectedQuantity * selectedProduct.envelopeFee;
     }
 
     return totalPrice;
-};
-
+  };
 
   const typeOptions = invitations.map((invitation) => invitation.name)
     .filter((v, i, a) => a.indexOf(v) === i)

@@ -109,7 +109,7 @@ const invitationSchema = new Schema({
     required: true,
   },
   envelopeFee: {
-    type: Number,
+    type: Decimal128,
     required: false,
   },
   extraQuantityFee: {
