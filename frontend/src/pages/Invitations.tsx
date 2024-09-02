@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import InvitationNumselect from "../components/ForInvitationsPage/InvitationSelection";
 
+
 interface Invitations {
   name: string;
   code: string;
@@ -21,8 +22,6 @@ export default function Invitations() {
   const [price, setPrice] = useState(0);
   const [productCode, setProductCode] = useState('');
   const [image, setImage] = useState('./img/No-Product-Selected.png');
-  const [envelopeFee, setEnvelopeFee] = useState(0);
-  const [extraQuantityFee, setExtraQuantityFee] = useState(0);
   const [envelopeSelected, setEnvelopeSelected] = useState(false);
 
   useEffect(() => {
@@ -38,8 +37,6 @@ export default function Invitations() {
     const selectedProduct = invitations.find(invitation => invitation.name === selectedType);
     setProductCode(selectedProduct?.code || '');
     setImage(selectedProduct?.image || './img/No-Product-Selected.png');
-    setEnvelopeFee(selectedProduct?.envelopeFee || 0);
-    setExtraQuantityFee(selectedProduct?.extraQuantityFee || 0);
     setEnvelopeSelected(false); // Reset envelope selection when type changes
     setPrice(calculateTotalPrice(selectedProduct, 25, false));
   };
@@ -72,7 +69,7 @@ export default function Invitations() {
     if (!selectedProduct) return 0;
 
     // Get the base price for the closest quantity (25, 50, 100)
-    const order = selectedProduct.order.find(o => o.quantity === selectedQuantity) || selectedProduct.order[selectedProduct.order.length - 1];
+    const order = selectedProduct.order.find(product => product.quantity === selectedQuantity) || selectedProduct.order[selectedProduct.order.length - 1];
     const basePrice = order ? order.price : 0;
 
     let totalPrice = basePrice;

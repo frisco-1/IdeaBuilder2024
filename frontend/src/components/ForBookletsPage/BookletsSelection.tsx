@@ -61,7 +61,7 @@ export default function BookletsNumselect(props: BookletsNumselectProps) {
                 />
               </Form.Group>
             </Form>
-            <h3 className='mt-3'>Printing Cost: ${props.price}</h3>
+            <h3 className='mt-3'>Printing Cost: ${props.price.toFixed(2)}</h3>
           </Col>
         </Row>
       </Container>

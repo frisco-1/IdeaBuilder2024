@@ -36,6 +36,7 @@ const routes = [
   'booklets',
   'tickets',
   'invitations',
+  'vinyl_stickers',
 ];
 
 routes.forEach(route => {

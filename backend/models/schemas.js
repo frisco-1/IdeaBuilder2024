@@ -39,6 +39,7 @@ const LetterHeads = mongoose.model('LetterHeads', productSchema, 'letterheads')
 const Invoices = mongoose.model('Invoices', productSchema, 'invoices')
 const PocketFolders = mongoose.model('PocketFolders', productSchema, 'pocket_folders')
 const Recordatorios = mongoose.model('Recordatorios', productSchema, 'recordatorios')
+const VinylStickers = mongoose.model('VinylStickers', productSchema, 'vinyl_stickers')
 
 
 //TICKET SCHEMA
@@ -48,7 +49,7 @@ const ticketSchema = new Schema({
     required: true
   },
   quantity: {
-    type: Number, 
+    type: Number || string, 
     required: true
   },
   price: {
@@ -58,6 +59,7 @@ const ticketSchema = new Schema({
 })
 
 const Tickets = mongoose.model('Tickets', ticketSchema, 'tickets');
+const PrintedVinylLaminated = mongoose.model('PrintedVinylLaminated', ticketSchema, 'printed_vinyl_laminated');
 
 //BOOKLET SCHEMA
 
@@ -109,11 +111,15 @@ const invitationSchema = new Schema({
     required: true,
   },
   envelopeFee: {
-    type: Decimal128,
+    type: Number,
     required: false,
   },
   extraQuantityFee: {
     type: Number,
+    required: false,
+  },
+  image: {
+    type: String, 
     required: false,
   }
 });
@@ -134,6 +140,8 @@ const mySchemas = {
   'Tickets': Tickets,
   'Booklets': Booklets,
   'Invitations': Invitation,
+  'VinylStickers': VinylStickers,
+  'PrintedVinylLaminated': PrintedVinylLaminated
 
 }
 module.exports = mySchemas;

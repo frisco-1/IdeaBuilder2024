@@ -70,7 +70,7 @@ export default function InvitationNumselect(props: InvitationNumselectProps) {
                 />
               </Form.Group>
             </Form>
-            <h3 className='mt-3'>Total Cost: ${props.price}</h3>
+            <h3 className='mt-3'>Total Cost: ${props.price.toFixed(2)}</h3>
           </Col>
         </Row>
       </Container>

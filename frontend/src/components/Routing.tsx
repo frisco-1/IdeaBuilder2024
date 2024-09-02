@@ -13,6 +13,7 @@ import Tickets from '../pages/Tickets';
 import Banners from '../pages/Banners';
 import Booklets from '../pages/Booklets';
 import Invitations from '../pages/Invitations';
+import VinylStickers from '../pages/VinylStickers';
 
 
 export default function Routing() {
@@ -33,6 +34,7 @@ export default function Routing() {
           <Route path='/banners' element={<Banners/>}/>
           <Route path='/booklets' element={<Booklets/>}/>
           <Route path='/invitations' element={<Invitations/>}/>
+          <Route path='/vinyl-stickers' element={<VinylStickers/>}/>
         </Routes>
     </>
   )
