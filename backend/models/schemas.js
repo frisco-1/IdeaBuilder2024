@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
+
+//PRODUCT SCHEMA
 // Product schema is the same for most products. Some specific products have additional fields that rerquire a different schema.
 const orderSchema = new Schema({
   quantity: {
@@ -42,24 +44,33 @@ const Recordatorios = mongoose.model('Recordatorios', productSchema, 'recordator
 const VinylStickers = mongoose.model('VinylStickers', productSchema, 'vinyl_stickers')
 
 
-//TICKET SCHEMA
-const ticketSchema = new Schema({
+//LITE PRODUCT SCHEMA
+// This is a schema made for products that don't follow the regualar product schema.
+const liteProductSchema = new Schema({
   code: {
     type: String, 
     required: true
   },
   quantity: {
-    type: Number || string, 
+    type: Number, 
     required: true
+  },
+  name:{
+    type: String,
+    required: false
   },
   price: {
     type: Number, 
     default: null
+  },
+  image: {
+    type: String,
+    required: false,
   }
 })
 
-const Tickets = mongoose.model('Tickets', ticketSchema, 'tickets');
-const PrintedVinylLaminated = mongoose.model('PrintedVinylLaminated', ticketSchema, 'printed_vinyl_laminated');
+const Tickets = mongoose.model('Tickets', liteProductSchema, 'tickets');
+const PrintedVinylLaminated = mongoose.model('PrintedVinylLaminated', liteProductSchema, 'printed_vinyl_laminated');
 
 //BOOKLET SCHEMA
 

@@ -37,6 +37,7 @@ const routes = [
   'tickets',
   'invitations',
   'vinyl_stickers',
+  'printed_vinyl_laminated'
 ];
 
 routes.forEach(route => {
