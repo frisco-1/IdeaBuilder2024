@@ -7,6 +7,7 @@ const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
+
 // Define the structure of your search result items
 interface SearchResult {
   name: string;

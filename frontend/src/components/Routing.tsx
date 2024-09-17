@@ -15,6 +15,14 @@ import Booklets from '../pages/Booklets';
 import Invitations from '../pages/Invitations';
 import VinylStickers from '../pages/VinylStickers';
 import PrinitedVinylLaminated from '../pages/PrintedVinylLaminated';
+import RealtorSigns from '../pages/RealtorSigns';
+import CoroplastSigns from '../pages/CoroplastSigns';
+import AFrame from '../pages/AFrame';
+import ArrowSigns from '../pages/ArrowSigns';
+import SingleArmSignPost from '../pages/SingleArmSignPost';
+import RollUpBanners from '../pages/RollUpBanners';
+import CustomFlags from '../pages/CustomFlags';
+import TableCovers from '../pages/TableCovers';
 
 
 export default function Routing() {
@@ -37,6 +45,14 @@ export default function Routing() {
           <Route path='/invitations' element={<Invitations/>}/>
           <Route path='/vinyl-stickers' element={<VinylStickers/>}/>
           <Route path='/printed-vinyl-laminated' element={<PrinitedVinylLaminated/>}/>
+          <Route path='/realtor-signs' element={<RealtorSigns/>}/>
+          <Route path='/coroplast-signs' element={<CoroplastSigns/>}/>
+          <Route path='/a-frame' element={<AFrame/>}/>
+          <Route path='/arrow-signs' element={<ArrowSigns/>}/>
+          <Route path='/single-arm-sign-post' element={<SingleArmSignPost/>}/>
+          <Route path='/roll-up-banners' element={<RollUpBanners/>}/>
+          <Route path='/custom-flags' element={<CustomFlags/>}/>
+          <Route path='/table-covers' element={<TableCovers/>}/>
         </Routes>
     </>
   )

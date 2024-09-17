@@ -38,7 +38,17 @@ const routes = [
   'tickets',
   'invitations',
   'vinyl_stickers',
-  'printed_vinyl_laminated'
+  'printed_vinyl_laminated',
+  'realtor_signs',
+  'coroplast_signs',
+  'a_frame',
+  'arrow_signs',
+  'single_arm_sign_post',
+  'roll_up_banners',
+  'custom_flags',
+  'table_covers',
+
+
 ];
 
 routes.forEach(route => {

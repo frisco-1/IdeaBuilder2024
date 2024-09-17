@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Form, Breadcrumb } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-interface VinylLaminatedProps {
+interface OneSelectProps {
   displayName: string;
   displayCode: string;
   image: string;
@@ -15,7 +15,7 @@ interface VinylLaminatedProps {
   sizeOptions: { value: string; label: string }[];
 }
 
-export default function VinylSelection(props: VinylLaminatedProps) {
+export default function OneSelect(props: OneSelectProps) {
   return (
     <>
       <Container>
@@ -38,9 +38,8 @@ export default function VinylSelection(props: VinylLaminatedProps) {
             <hr />
             <Form>
               <Form.Group>
-                <Form.Label>Size:</Form.Label>
                 <Form.Select value={props.size} onChange={props.handleSizeChange}>
-                  <option value="">Select Size</option>
+                  <option value="">Select Option</option>
                   {props.sizeOptions.map((option, index) => (
                     <option key={index} value={option.value}>{option.label}</option>
                   ))}

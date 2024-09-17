@@ -2,22 +2,22 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import OneSelect from '../components/ForPrintedVinylLaminated/OneSelect-Quantity';
 
-interface PrintedVinylLaminated {
+interface AFrame {
   code: string;
   name: string;  // Adjusted from size to name
   price: number;
   image: string;
 }
 
-export default function PrintedVinylLaminated() {
-  const [product, setProduct] = useState<PrintedVinylLaminated[]>([]);
+export default function AFrame() {
+  const [product, setProduct] = useState<AFrame[]>([]);
   const [selectedName, setSelectedName] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
-    axios.get('http://localhost:4000/printed_vinyl_laminated')
+    axios.get('http://localhost:4000/a_frame')
       .then(res => setProduct(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -49,8 +49,8 @@ export default function PrintedVinylLaminated() {
 
   return (
     <OneSelect
-      displayName='Printed Vinyl Laminated' 
-      displayCode='(PVL)'
+      displayName='A Frame 24" x 36"' 
+      displayCode='(SSA)'
       image={image}
       name={selectedName}
       size={selectedName}  // Adjusted from size to selectedName

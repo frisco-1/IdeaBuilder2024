@@ -71,6 +71,14 @@ const liteProductSchema = new Schema({
 
 const Tickets = mongoose.model('Tickets', liteProductSchema, 'tickets');
 const PrintedVinylLaminated = mongoose.model('PrintedVinylLaminated', liteProductSchema, 'printed_vinyl_laminated');
+const RealtorSigns = mongoose.model('RealtorSigns', liteProductSchema, 'realtor_signs');
+const CoroplastSigns = mongoose.model('CoroplastSigns', liteProductSchema, 'coroplast_signs');
+const AFrame = mongoose.model('AFrame', liteProductSchema, 'a_frame');
+const ArrowSigns =  mongoose.model('ArrowSigns', liteProductSchema, 'arrow_signs');
+const SingleArmSignPost = mongoose.model('SingleArmSignPost', liteProductSchema, 'single_arm_sign_post');
+const RollUpBanners = mongoose.model('RollUpBanners', liteProductSchema, 'roll_up_banners');
+const CustomFlags = mongoose.model('CustomFlags', liteProductSchema, 'custom_flags');
+const TableCovers = mongoose.model('TableCovers', liteProductSchema, 'table_covers');
 
 //BOOKLET SCHEMA
 
@@ -152,7 +160,15 @@ const mySchemas = {
   'Booklets': Booklets,
   'Invitations': Invitation,
   'VinylStickers': VinylStickers,
-  'PrintedVinylLaminated': PrintedVinylLaminated
+  'PrintedVinylLaminated': PrintedVinylLaminated,
+  'RealtorSigns': RealtorSigns,
+  'CoroplastSigns': CoroplastSigns,
+  'AFrame': AFrame,
+  'ArrowSigns': ArrowSigns,
+  'SingleArmSignPost': SingleArmSignPost,
+  'RollUpBanners': RollUpBanners,
+  'CustomFlags': CustomFlags,
+  'TableCovers': TableCovers
 
 }
 module.exports = mySchemas;
