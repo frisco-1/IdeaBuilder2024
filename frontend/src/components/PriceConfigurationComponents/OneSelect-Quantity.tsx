@@ -1,3 +1,19 @@
+//Product Pages that use this component:
+/*
+ A Frame
+ Arrow Signs
+ Table Covers
+ Coroplast Signs
+ Custom Flags
+ Printed Vinyl Laminated
+ Realtor Signs
+ Roll Up Banners
+ Single Arm Sign Posts
+ Vinyl Stickers
+
+*/
+
+
 import React from 'react';
 import { Container, Row, Col, Form, Breadcrumb } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -11,6 +27,7 @@ interface OneSelectProps {
   handleSizeChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   quantity: number;
   handleQuantityChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  productCode: string;
   price: number;
   sizeOptions: { value: string; label: string }[];
 }
@@ -36,6 +53,7 @@ export default function OneSelect(props: OneSelectProps) {
           <Col md={6} className='p-3 position-relative'>
             <h3>Configure & Price</h3>
             <hr />
+            <h4>Product Code: {props.productCode}</h4>
             <Form>
               <Form.Group>
                 <Form.Select value={props.size} onChange={props.handleSizeChange}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import TicketQuantity from '../components/ForTicketPage/TicketQuantity';
+import TicketQuantity from '../components/PriceConfigurationComponents/Tickets/TicketQuantity';
 
 interface Tickets {
   code: string;

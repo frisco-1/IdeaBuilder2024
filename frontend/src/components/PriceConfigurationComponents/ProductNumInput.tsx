@@ -1,7 +1,14 @@
+//Product Pages that use this component:
+/*
+  Banners
+
+
+*/
+
 import React from 'react'
 import {Container, Row, Col, Form, Breadcrumb} from 'react-bootstrap';
 import {useLocation} from 'react-router-dom';
-import '../../styles/reactBootstrap.css';
+import '../../../styles/reactBootstrap.css';
 
 type ProductNumInputProps = {
   displayName: string;

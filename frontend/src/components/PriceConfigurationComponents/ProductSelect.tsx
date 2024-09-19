@@ -1,3 +1,16 @@
+//Product Pages that use this component:
+/*
+ Business Cards
+ Door Hangers
+ Envelopes
+ Flyers
+ Invoices
+ Letterheads
+ PocketFolders
+ Product Display
+
+*/
+
 import React from 'react';
 import { Container, Row, Col, Form, Breadcrumb } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';

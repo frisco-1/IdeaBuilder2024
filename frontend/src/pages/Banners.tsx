@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import ProductNumInput from '../components/ProductNumInput';
+import ProductNumInput from '../components/PriceConfigurationComponents/ProductNumInput';
 
 export default function Banners() {
   const [length, setLength] = useState<number>(0);

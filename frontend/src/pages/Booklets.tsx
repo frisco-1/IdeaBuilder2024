@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import BookletNumselect from "../components/ForBookletsPage/BookletsSelection";
+import BookletNumselect from "../components/PriceConfigurationComponents/Booklets/OneSelect-Booklets";
 
 interface Booklets {
   name: string;

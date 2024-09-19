@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import OneSelect from '../components/ForPrintedVinylLaminated/OneSelect-Quantity';
+import OneSelect from '../components/PriceConfigurationComponents/OneSelect-Quantity';
 
 interface CustomFlags {
   code: string;
@@ -14,6 +14,7 @@ export default function CustomFlags() {
   const [selectedName, setSelectedName] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(0);
+  const [productCode, setProductCode] = useState('');
   const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function CustomFlags() {
     const selectedProduct = product.find(p => p.name === selectedName);
     setPrice(selectedProduct ? selectedProduct.price : 0);
     setImage(selectedProduct ? selectedProduct.image : './img/No-Product-Selected.png');
+    setProductCode(selectedProduct ? selectedProduct.code : '');
   };
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,12 +55,13 @@ export default function CustomFlags() {
       displayCode='(SSF)'
       image={image}
       name={selectedName}
-      size={selectedName}  // Adjusted from size to selectedName
+      size={selectedName} 
       handleSizeChange={handleNameChange}
       quantity={quantity}
       handleQuantityChange={handleQuantityChange}
       price={price}
-      sizeOptions={nameOptions}  // Adjusted from sizeOptions to nameOptions
+      sizeOptions={nameOptions}  
+      productCode={productCode}
     />
   );
 }

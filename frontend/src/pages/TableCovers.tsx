@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import OneSelect from '../components/ForPrintedVinylLaminated/OneSelect-Quantity';
+import OneSelect from '../components/PriceConfigurationComponents/OneSelect-Quantity';
 
 interface TableCovers {
   code: string;

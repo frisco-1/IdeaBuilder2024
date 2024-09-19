@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import InvitationNumselect from "../components/ForInvitationsPage/InvitationSelection";
+import InvitationNumselect from "../components/PriceConfigurationComponents/Invitations/InvitationSelection";
 
 
 interface Invitations {

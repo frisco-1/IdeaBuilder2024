@@ -1,3 +1,5 @@
+//Pricing Configuration Component for the Invitations Product Page. Invitations.tsx
+//This component is needed for handling a checkbox functionality for the Envelope option.
 import React from 'react';
 import { Container, Row, Col, Form, Breadcrumb } from 'react-bootstrap';
 

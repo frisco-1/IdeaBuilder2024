@@ -1,3 +1,7 @@
+//Pricing Configuration Component for the Tickets Product Page.
+//This component is needed to handle a design checkbox (adds $45) and having a select form with different quantity options.
+//This is for Tickets.tsx. 
+
 import React from 'react';
 import { Container, Row, Col, Form, Breadcrumb } from 'react-bootstrap';
 import { Link } from 'react-router-dom';

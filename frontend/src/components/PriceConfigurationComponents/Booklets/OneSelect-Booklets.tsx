@@ -1,3 +1,5 @@
+// A Pricing Configuration Component specfically for Booklets.
+//This component is neccassary to have the number form to be at a minimum of 25. 
 import React from 'react';
 import { Container, Row, Col, Form, Breadcrumb } from 'react-bootstrap';
 
