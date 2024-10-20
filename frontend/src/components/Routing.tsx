@@ -26,7 +26,8 @@ import CustomFlags from '../pages/CustomFlags';
 import TableCovers from '../pages/TableCovers';
 import MagneticSigns from '../pages/MagneticSigns';
 import MaxMetalLaminated from '../pages/MaxMetalLaminated';
-
+import FoamSignsLaminated from '../pages/FoamSignsLaminated';
+import CoroplastSignsLaminated from '../pages/CoroplastSignsLaminated';
 
 export default function Routing() {
   return (
@@ -59,6 +60,8 @@ export default function Routing() {
           <Route path='/table-covers' element={<TableCovers/>}/>
           <Route path='/magnetic-signs' element={<MagneticSigns/>}/>
           <Route path='/max-metal-laminated' element={<MaxMetalLaminated/>}/>
+          <Route path='/foam-signs-laminated' element={<FoamSignsLaminated/>}/>
+          <Route path='/coroplast-signs-laminated' element={<CoroplastSignsLaminated/>}/>
         </Routes>
     </>
   )

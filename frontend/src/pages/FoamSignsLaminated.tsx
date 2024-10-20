@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import OneSelect from '../components/PriceConfigurationComponents/OneSelect-Quantity';
 
-interface MaxMetalLaminated {
+interface FoamSignsLaminated {
   code: string;
   name: string;  // Adjusted from size to name
   price: number;
@@ -10,8 +10,8 @@ interface MaxMetalLaminated {
   description: string;
 }
 
-export default function MaxMetalLaminated() {
-  const [product, setProduct] = useState<MaxMetalLaminated[]>([]);
+export default function FoamSignsLaminated() {
+  const [product, setProduct] = useState<FoamSignsLaminated[]>([]);
   const [selectedName, setSelectedName] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [productCode, setProductCode] = useState('');
@@ -20,7 +20,7 @@ export default function MaxMetalLaminated() {
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:4000/max_metal_laminated')
+    axios.get('http://localhost:4000/foam_signs_laminated')
       .then(res => setProduct(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -55,8 +55,8 @@ export default function MaxMetalLaminated() {
   return (
     <>
        <OneSelect
-        displayName='Max Metal Laminated' 
-        displayCode='(MM)'
+        displayName='Foam Signs Laminated' 
+        displayCode='(FS)'
         image={image}
         name={selectedName}
         size={selectedName}

@@ -86,6 +86,8 @@ const CustomFlags = mongoose.model('CustomFlags', liteProductSchema, 'custom_fla
 const TableCovers = mongoose.model('TableCovers', liteProductSchema, 'table_covers');
 const MagneticSigns = mongoose.model('MagneticSigns', liteProductSchema, 'magnetic_signs');
 const MaxMetalLaminated = mongoose.model('MaxMetalLaminated', liteProductSchema, 'max_metal_laminated');
+const FoamSignsLaminated = mongoose.model('FoamSignsLaminated', liteProductSchema, 'foam_signs_laminated');
+const CoroplastSignsLaminated = mongoose.model('CoroplastSignsLaminated', liteProductSchema, 'coroplast_signs_laminated');
 
 
 //INVITATIONS SCHEMA
@@ -154,7 +156,9 @@ const mySchemas = {
   'TableCovers': TableCovers,
   'Keywords': Keywords,
   'MagneticSigns': MagneticSigns,
-  'MaxMetalLaminated': MaxMetalLaminated
+  'MaxMetalLaminated': MaxMetalLaminated,
+  'FoamSignsLaminated': FoamSignsLaminated,
+  'CoroplastSignsLaminated': CoroplastSignsLaminated
 
 }
 module.exports = mySchemas;

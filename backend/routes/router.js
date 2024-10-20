@@ -49,6 +49,8 @@ const routes = [
   'table_covers',
   'magnetic_signs',
   'max_metal_laminated',
+  'foam_signs_laminated',
+  'coroplast_signs_laminated'
 
 
 ];
