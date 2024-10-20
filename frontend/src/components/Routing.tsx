@@ -1,6 +1,7 @@
 import {Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import SearchPage from '../pages/SearchPage';
+import ScrollToTop from './ScrollToTop';
 import BusinessCard from '../pages/BusinessCard';
 import Flyers from '../pages/Flyers';
 import DoorHangers from '../pages/DoorHangers';
@@ -23,11 +24,14 @@ import SingleArmSignPost from '../pages/SingleArmSignPost';
 import RollUpBanners from '../pages/RollUpBanners';
 import CustomFlags from '../pages/CustomFlags';
 import TableCovers from '../pages/TableCovers';
+import MagneticSigns from '../pages/MagneticSigns';
+import MaxMetalLaminated from '../pages/MaxMetalLaminated';
 
 
 export default function Routing() {
   return (
     <>
+        <ScrollToTop/>
         <Routes>
           <Route path='/' element={<Home/>} />
           <Route path='/search' element={<SearchPage/>} />
@@ -53,6 +57,8 @@ export default function Routing() {
           <Route path='/roll-up-banners' element={<RollUpBanners/>}/>
           <Route path='/custom-flags' element={<CustomFlags/>}/>
           <Route path='/table-covers' element={<TableCovers/>}/>
+          <Route path='/magnetic-signs' element={<MagneticSigns/>}/>
+          <Route path='/max-metal-laminated' element={<MaxMetalLaminated/>}/>
         </Routes>
     </>
   )

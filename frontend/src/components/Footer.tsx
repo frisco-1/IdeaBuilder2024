@@ -25,7 +25,7 @@ function Footer() {
 
              <ul className='list-unstyled'>
               <li><Link id='footerLink'to='/business-cards' >Business Cards</Link></li>
-              <li><Link id='footerLink' to='/brochures'>Brochures</Link></li>
+              <li><Link id='footerLink' to='/tickets'>Tickets</Link></li>
               <li><Link id='footerLink' to ='/flyers'>Flyers</Link></li>
               <li><Link id='footerLink' to='invoices'>Invoices</Link></li>
             </ul>
@@ -34,7 +34,7 @@ function Footer() {
             <h5>Signs</h5>
 
             <ul className='list-unstyled'>
-              <li><Link id='footerLink' to='/magnets'>Magnets</Link></li>
+              <li><Link id='footerLink' to='/magnetic-signs'>Magnetic Signs</Link></li>
               <li><Link id='footerLink' to ='/banners'>Banners</Link></li>
               <li><Link id='footerLink' to='/aluminum-signs'>Aluminum Signs</Link></li>
               <li><Link id='footerLink' to='/realtor-signs'>Realtor Signs</Link></li>
@@ -45,8 +45,6 @@ function Footer() {
 
             <ul className='list-unstyled'>
               <li><Link id='footerLink' to='/pens'>Pens</Link></li>
-              <li><Link id='footerLink' to='/keychains'>Keychains</Link></li>
-              <li><Link id='footerLink' to='/drink-wear'>Drink Wear</Link></li>
               <li><Link id='footerLink' to='/table-covers'>Table Covers</Link></li>
             </ul>
           </Col>

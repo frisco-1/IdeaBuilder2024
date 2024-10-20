@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 // Product schema is the same for most products. Some specific products have additional fields that rerquire a different schema.
 const orderSchema = new Schema({
   quantity: {
-    type: Number, 
+    type: [Number, String], 
     required: true,
   },
   price: {
@@ -42,6 +42,7 @@ const Invoices = mongoose.model('Invoices', productSchema, 'invoices')
 const PocketFolders = mongoose.model('PocketFolders', productSchema, 'pocket_folders')
 const Recordatorios = mongoose.model('Recordatorios', productSchema, 'recordatorios')
 const VinylStickers = mongoose.model('VinylStickers', productSchema, 'vinyl_stickers')
+const Booklets = mongoose.model('Booklets', productSchema, 'booklets');
 
 
 //LITE PRODUCT SCHEMA
@@ -66,6 +67,10 @@ const liteProductSchema = new Schema({
   image: {
     type: String,
     required: false,
+  },
+  description: {
+    type: String, 
+    required: false
   }
 })
 
@@ -79,40 +84,9 @@ const SingleArmSignPost = mongoose.model('SingleArmSignPost', liteProductSchema,
 const RollUpBanners = mongoose.model('RollUpBanners', liteProductSchema, 'roll_up_banners');
 const CustomFlags = mongoose.model('CustomFlags', liteProductSchema, 'custom_flags');
 const TableCovers = mongoose.model('TableCovers', liteProductSchema, 'table_covers');
+const MagneticSigns = mongoose.model('MagneticSigns', liteProductSchema, 'magnetic_signs');
+const MaxMetalLaminated = mongoose.model('MaxMetalLaminated', liteProductSchema, 'max_metal_laminated');
 
-//BOOKLET SCHEMA
-
-const pricingSchema = new Schema({
-  quantityRange: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-});
-
-const bookletSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  code: {
-    type: String,
-    required: true,
-  },
-  pricing: {
-    type: [pricingSchema],
-    required: true,
-  },
-  image: {
-    type: String,
-    required: false,
-  }
-});
-
-const Booklets = mongoose.model('Booklets', bookletSchema, 'booklets');
 
 //INVITATIONS SCHEMA
 // Main schema for invitations
@@ -146,6 +120,15 @@ const invitationSchema = new Schema({
 const Invitation = mongoose.model('Invitations', invitationSchema, 'invitations');
 
 
+//SEARCH SCHEMA MODEL
+// This schema is used to store the search results.
+const keywordsSchema = new Schema({
+  keyword: {type: String, required: true},
+  productLink: {type: String, required: true},
+  productName: {type: String, required: true}
+})
+const Keywords = mongoose.model('Keywords', keywordsSchema, 'keywords');
+
 const mySchemas = {
 
   'BusinessCards': BusinessCard, 
@@ -168,7 +151,10 @@ const mySchemas = {
   'SingleArmSignPost': SingleArmSignPost,
   'RollUpBanners': RollUpBanners,
   'CustomFlags': CustomFlags,
-  'TableCovers': TableCovers
+  'TableCovers': TableCovers,
+  'Keywords': Keywords,
+  'MagneticSigns': MagneticSigns,
+  'MaxMetalLaminated': MaxMetalLaminated
 
 }
 module.exports = mySchemas;

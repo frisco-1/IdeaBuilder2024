@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useLocation, Link } from 'react-router-dom';
+import axios from 'axios';
 
 // Custom hook to parse the query parameter from the URL
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
-
 // Define the structure of your search result items
 interface SearchResult {
-  name: string;
-  code: string;
-  collection: string;
-  // Add other relevant fields if needed
+  productName: string;
+  productLink: string;
 }
 
 const SearchPage = () => {
@@ -23,15 +21,11 @@ const SearchPage = () => {
 
   useEffect(() => {
     if (query) {
-      // Fetch search results from the API
-      fetch(`/api/search?query=${query}`)
+      // Fetch search results from the API using axios
+      axios.get(`http://localhost:4000/api/search`, { params: { query } })
         .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
+          setResults(response.data);
         })
-        .then(data => setResults(data))
         .catch(err => {
           console.error('Error fetching search results:', err);
           setError('Failed to fetch search results. Please try again later.');
@@ -49,11 +43,9 @@ const SearchPage = () => {
           <ul>
             {results.map((result, index) => (
               <li key={index}>
-                <h3>{result.name}</h3>
-                <p>Code: {result.code}</p>
-                <p>Collection: {result.collection}</p>
-                <Link to={`/product/${result.collection}/${result.code}`}>
-                  View Product
+                <h3>{result.productName}</h3>
+                <Link to={result.productLink}>
+                  View {result.productName}
                 </Link>
               </li>
             ))}
