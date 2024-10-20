@@ -58,6 +58,7 @@ export default function TableCovers() {
       quantity={quantity}
       handleQuantityChange={handleQuantityChange}
       price={price}
+      productCode='SST'
       sizeOptions={nameOptions}  // Adjusted from sizeOptions to nameOptions
     />
   );

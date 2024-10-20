@@ -57,6 +57,7 @@ export default function ArrowSigns() {
       handleSizeChange={handleNameChange}
       quantity={quantity}
       handleQuantityChange={handleQuantityChange}
+      productCode= 'SSAR'
       price={price}
       sizeOptions={nameOptions}  // Adjusted from sizeOptions to nameOptions
     />

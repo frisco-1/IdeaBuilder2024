@@ -1,4 +1,4 @@
-import React from 'react'
+
 import HomePageCarousel from '../components/ForHomePage/HomePageCarousel';
 import ProductListBar from '../components/ForHomePage/ProductListBar';
 import {Row, Col} from 'react-bootstrap'; 
