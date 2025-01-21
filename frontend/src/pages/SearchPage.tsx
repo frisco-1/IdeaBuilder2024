@@ -22,7 +22,8 @@ const SearchPage = () => {
   useEffect(() => {
     if (query) {
       // Fetch search results from the API using axios
-      axios.get(`http://localhost:4000/api/search`, { params: { query } })
+      const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
+      axios.get(`http://${ec2ip}/api/search`, { params: { query } })
         .then(response => {
           setResults(response.data);
         })

@@ -16,7 +16,8 @@ export default function Tickets() {
   const image = './img/Product-Pages/Tickets/Tickets.png';
 
   useEffect(() => {
-  axios.get('http://localhost:4000/tickets')
+    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
+  axios.get(`http://${ec2ip}/tickets`)
     .then(res => {setProduct(res.data);})
     .catch(err => console.error(err));
 }, []);

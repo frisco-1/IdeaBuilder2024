@@ -25,7 +25,8 @@ export default function Invitations() {
   const [envelopeSelected, setEnvelopeSelected] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/invitations')
+    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
+    axios.get(`http://${ec2ip}/invitations`)
       .then(res => setInvitations(res.data))
       .catch(err => console.error(err));
   }, []);

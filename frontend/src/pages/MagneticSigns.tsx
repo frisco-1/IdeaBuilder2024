@@ -20,7 +20,8 @@ export default function MagneticSigns() {
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:4000/magnetic_signs')
+    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
+    axios.get(`http://${ec2ip}/magnetic_signs`)
       .then(res => setProduct(res.data))
       .catch(err => console.error(err));
   }, []);

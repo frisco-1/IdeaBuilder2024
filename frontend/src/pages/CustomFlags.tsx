@@ -18,7 +18,8 @@ export default function CustomFlags() {
   const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
-    axios.get('http://localhost:4000/custom_flags')
+    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
+    axios.get(`http://${ec2ip}/custom_flags`)
       .then(res => setProduct(res.data))
       .catch(err => console.error(err));
   }, []);

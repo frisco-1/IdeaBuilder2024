@@ -20,7 +20,8 @@ export default function CoroplastSignsLaminated() {
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:4000/coroplast_signs_laminated')
+    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
+    axios.get(`http://${ec2ip}/coroplast_signs_laminated`)
       .then(res => setProduct(res.data))
       .catch(err => console.error(err));
   }, []);

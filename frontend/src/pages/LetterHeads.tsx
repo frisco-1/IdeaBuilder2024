@@ -21,7 +21,8 @@ export default function LetterHeads() {
   const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
-    axios.get('http://localhost:4000/letterheads')
+    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
+    axios.get(`http://${ec2ip}/letter_heads`)
       .then(res => setProduct(res.data))
       .catch(err => console.error(err));
   }, []);

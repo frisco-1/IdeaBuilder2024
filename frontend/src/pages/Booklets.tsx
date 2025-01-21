@@ -21,7 +21,8 @@ export default function Booklets() {
   const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
-    axios.get('http://localhost:4000/booklets')
+    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
+    axios.get(`http://${ec2ip}/booklets`)
       .then(res => setBooklets(res.data))
       .catch(err => console.error(err));
   }, []);

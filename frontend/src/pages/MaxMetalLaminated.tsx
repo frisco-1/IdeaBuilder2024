@@ -20,7 +20,8 @@ export default function MaxMetalLaminated() {
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:4000/max_metal_laminated')
+    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
+    axios.get(`http://${ec2ip}/max_metal_laminated`)
       .then(res => setProduct(res.data))
       .catch(err => console.error(err));
   }, []);
