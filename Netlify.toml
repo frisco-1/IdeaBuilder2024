@@ -1,7 +1,0 @@
-[build]
-  base = "frontend"
-  command = "yarn build"
-  publish = "frontend/dist"  # Adjust this to your actual build output directory
-
-[build.environment]
-  NODE_VERSION = "18"  # Specify the Node.js version if needed
