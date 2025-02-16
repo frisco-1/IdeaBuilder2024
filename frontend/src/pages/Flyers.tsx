@@ -22,8 +22,8 @@ export default function Flyers() {
   const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
-    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
-    axios.get(`http://${ec2ip}/flyers`)
+    const backend = import.meta.env.VITE_BACKEND_BASE_URL;
+    axios.get(`${backend}/flyers`)
       .then(res => setFlyers(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -41,8 +41,11 @@ export default function Flyers() {
   const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedQuantity = e.target.value;
     setQuantity(selectedQuantity);
+
     const selectedProduct = flyers.find(card => card.name === type);
-    const selectedOrder = selectedProduct?.order.find(order => order.quantity === parseInt(selectedQuantity));
+
+    //Had to make Number() to compare the values correctly as order.quantity was a string and selectedQuantity was a string.
+    const selectedOrder = selectedProduct?.order.find(order => Number(order.quantity) === Number(selectedQuantity));
      setPrice(selectedOrder?.price !== undefined && selectedOrder?.price !== 0 ? Number(selectedOrder.price) : 0);
   };
 

@@ -21,8 +21,8 @@ export default function DoorHangers() {
   const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
-    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
-    axios.get(`http://${ec2ip}/door_hangers`)
+    const backend = import.meta.env.VITE_BACKEND_BASE_URL;
+    axios.get(`${backend}/door_hangers`)
       .then(res => setDoorHangers(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -41,7 +41,7 @@ export default function DoorHangers() {
     const selectedQuantity = e.target.value;
     setQuantity(selectedQuantity);
     const selectedProduct = doorHangers.find(card => card.name === type);
-    const selectedOrder = selectedProduct?.order.find(order => order.quantity === parseInt(selectedQuantity));
+    const selectedOrder = selectedProduct?.order.find(order => Number(order.quantity) === Number(selectedQuantity));
      setPrice(selectedOrder?.price !== undefined && selectedOrder?.price !== 0 ? Number(selectedOrder.price) : 0);
   };
 

@@ -20,8 +20,8 @@ export default function FoamSignsLaminated() {
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
-    axios.get(`http://${ec2ip}/foam_signs_laminated`)
+    const backend = import.meta.env.VITE_BACKEND_BASE_URL;
+    axios.get(`${backend}/foam_signs_laminated`)
       .then(res => setProduct(res.data))
       .catch(err => console.error(err));
   }, []);

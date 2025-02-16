@@ -16,8 +16,8 @@ export default function Tickets() {
   const image = './img/Product-Pages/Tickets/Tickets.png';
 
   useEffect(() => {
-    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
-  axios.get(`http://${ec2ip}/tickets`)
+    const backend = import.meta.env.VITE_BACKEND_BASE_URL;
+  axios.get(`${backend}/tickets`)
     .then(res => {setProduct(res.data);})
     .catch(err => console.error(err));
 }, []);

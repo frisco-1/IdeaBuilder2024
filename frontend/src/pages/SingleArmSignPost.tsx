@@ -18,8 +18,8 @@ export default function SingleArmSignPost() {
   const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
-    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
-    axios.get(`http://${ec2ip}/single_arm_sign_post`)
+    const backend = import.meta.env.VITE_BACKEND_BASE_URL;
+    axios.get(`${backend}/single_arm_sign_post`)
       .then(res => setProduct(res.data))
       .catch(err => console.error(err));
   }, []);

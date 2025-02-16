@@ -18,8 +18,8 @@ export default function RealtorSigns() {
   const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
-    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
-    axios.get(`http://${ec2ip}/realtor_signs`)
+    const backend = import.meta.env.VITE_BACKEND_BASE_URL;
+    axios.get(`${backend}/realtor_signs`)
       .then(res => setProduct(res.data))
       .catch(err => console.error(err));
   }, []);

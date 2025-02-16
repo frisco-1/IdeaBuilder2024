@@ -21,8 +21,8 @@ export default function BusinessCard() {
   const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
-    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
-    axios.get(`http://${ec2ip}/business_cards`)
+    const backend = import.meta.env.VITE_BACKEND_BASE_URL;
+    axios.get(`${backend}/business_cards`)
       .then(res => setBusinessCards(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -37,13 +37,20 @@ export default function BusinessCard() {
     setImage(selectedProduct?.image || './img/No-Product-Selected.png');
   };
 
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedQuantity = e.target.value;
-    setQuantity(selectedQuantity);
-    const selectedProduct = businessCards.find(card => card.name === type);
-    const selectedOrder = selectedProduct?.order.find(order => order.quantity === parseInt(selectedQuantity));
-    setPrice(selectedOrder?.price !== undefined && selectedOrder?.price !== 0 ? Number(selectedOrder.price) : 0);
-  };
+ const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+
+  const selectedQuantity = e.target.value;
+  setQuantity(selectedQuantity);
+
+  const selectedProduct = businessCards.find(card => card.name === type);
+  console.log("Selected Product:", selectedProduct);
+
+  const selectedOrder = selectedProduct?.order.find(order => Number(order.quantity) === Number(selectedQuantity));
+
+
+  setPrice(selectedOrder?.price != null ? Number(selectedOrder.price) : 0);
+};
+
 
   const typeOptions = businessCards.map((card) => card.name)
     .filter((v, i, a) => a.indexOf(v) === i)

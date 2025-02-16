@@ -18,8 +18,8 @@ export default function AFrame() {
   const [image, setImage] = useState('./img/No-Product-Selected.png');
 
   useEffect(() => {
-    const ec2ip = import.meta.env.VITE_REACT_APP_EC2_IP;
-    axios.get(`http://${ec2ip}/a_frame`)
+    const backend = import.meta.env.VITE_BACKEND_BASE_URL;
+    axios.get(`${backend}/a_frame`)
       .then(res => setProduct(res.data))
       .catch(err => console.error(err));
   }, []);
