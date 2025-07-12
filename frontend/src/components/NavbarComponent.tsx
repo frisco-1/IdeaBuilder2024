@@ -10,6 +10,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link } from 'react-router-dom';
 import { FaPhoneAlt } from "react-icons/fa";
+import { VscAccount } from "react-icons/vsc";
 
 
 export default function NavbarComp() {
@@ -25,9 +26,15 @@ export default function NavbarComp() {
     <>
       <Navbar className="bg-black navbar-dark navbar-light" expand={'md'} variant='light' sticky='top' >
         <Container fluid>
-          <Navbar.Brand href="/"><img src="./img/ib logo.PNG" alt="Idea Builder Logo" width={'100px'} height={'auto'}/></Navbar.Brand>
+
+          <Navbar.Brand href="/">
+          <img src="./img/ib logo.PNG" alt="Idea Builder Logo" width={'100px'} height={'auto'}/>
+          </Navbar.Brand>
+
           <h1 id='white'>Idea Builder</h1>
+
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-`} />
+
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-`}
             aria-labelledby={`offcanvasNavbarLabel-expand-`}
@@ -39,9 +46,11 @@ export default function NavbarComp() {
               </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <Nav className="justify-content-end flex-grow-1 pe-3">
+              <Nav className="justify-content-end flex-grow-1 p-2">
                 <Nav.Link as={Link} to='/'>Home</Nav.Link>
+
                 <Nav.Link href="#action2">Products</Nav.Link>
+              
                 <NavDropdown
                   title="Dropdown"
                   id={`offcanvasNavbarDropdown-expand-`}
@@ -57,7 +66,8 @@ export default function NavbarComp() {
                 </NavDropdown>
                 <Nav.Link as={Link} to='/contact'><FaPhoneAlt /> Contact Us</Nav.Link>
               </Nav>
-              <Form className="d-flex" onSubmit={handleSearchSubmit}>
+
+              <Form className="d-flex p-2" onSubmit={handleSearchSubmit}>
                 <Form.Control
                   type="search"
                   placeholder="Search"
@@ -68,6 +78,11 @@ export default function NavbarComp() {
                 />
                 <Button variant="outline-success">Search</Button>
               </Form>
+              
+
+              <Nav.Link as={Link} to='/sign-in' className='m-2 text-white bg-black text-center border rounded p-2'>Sign In <VscAccount /></Nav.Link>
+
+
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>
