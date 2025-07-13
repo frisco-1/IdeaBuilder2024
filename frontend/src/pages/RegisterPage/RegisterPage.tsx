@@ -29,8 +29,20 @@ export default function RegisterPage() {
 
   return (
     <>
-      <section className="mt-8">
-        <h1 className="text-center text-red-500 text-4xl mb-4">Register</h1>
+      <section className="mt-8 ">
+
+        <div className=''>
+          <h1 className="text-center text-red-500 text-4xl">
+            Register for Idea Builder
+          </h1>
+          <p className="text-center text-red-500 text-4xl ">
+            Create a free account or&nbsp;
+            <Link to="/sign-in">
+              log in
+            </Link>
+          </p>
+        </div>
+
 
         {userCreated && (
           <div className="my-4 text-center">
@@ -50,7 +62,7 @@ export default function RegisterPage() {
         )}
 
         <form
-          className="block max-w-sm mx-auto text-center"
+          className=" max-w-sm mx-auto text-center"
           onSubmit={handleFormSubmit}
         >
           <input
