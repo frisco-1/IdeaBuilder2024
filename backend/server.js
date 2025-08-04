@@ -2,39 +2,36 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { toNodeHandler } from 'better-auth/node';
-import { auth } from './lib/auth.js'; // Note the .js extension
+import {auth} from './lib/auth.js';
 import router from './routes/router.js';
 import connectDatabase from './config/database.js';
 import 'dotenv/config';
-import { auth } from "./auth"; // path to your Better Auth server instance
-
 
 const app = express();
 
+// ✅ CORS
 const corsOptions = {
-  origin: '*',
-  credentials: true, 
-  optionSuccessStatus: 200
-}
-
+  origin: [
+    'http://localhost:4000',
+    'https://ideabprinting.com/',
+    'https://www.ideabprinting.com/',
+    'http://localhost:5173',
+  ],
+  credentials: true,
+};
 app.use(cors(corsOptions));
 
-//Better Auth Handler - MUST come before other middleware
+// ✅ Mount BetterAuth routes BEFORE bodyParser and router
 app.all("/api/auth/*", toNodeHandler(auth));
 
-//Other middleware after Better Auth Handler
-app.use(bodyParser.json()); //submitting the form data as json data.
-app.use(bodyParser.urlencoded({extended: false}));
-app.use('/', router); //this line is necessary to have at the end.
+// ✅ Body parser and other middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/', router);
 
-
-// Initialize database connection
+// ✅ Connect DB and start server
 await connectDatabase();
-
-const port = process.env.PORT || 5000;
-const server = app.listen(port, () => {
-  console.log(`Server is running on port ${port}`)
-})
-
-
-
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
+  console.log(`✅ Server is running on port ${port}`);
+});

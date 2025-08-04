@@ -1,19 +1,6 @@
-import { authClient } from "./auth-client";
+import { authClient } from "../../frontend/src/auth/auth-client.js";
 
-interface SignUpParams {
-    email: string;
-    password: string;
-    name: string;
-    image?: string;
-}
-
-interface SignUpResult {
-    success: boolean;
-    data?: any;
-    error?: string;
-}
-
-export async function signUpUser(params: SignUpParams): Promise<SignUpResult> {
+export async function signUpUser(params) {
     try {
         const { data, error } = await authClient.signUp.email({
             email: params.email,
@@ -22,17 +9,14 @@ export async function signUpUser(params: SignUpParams): Promise<SignUpResult> {
             image: params.image,
             callbackURL: "/dashboard"
         }, {
-            onRequest: (ctx) => {
-                //show loading
+            onRequest: () => {
                 console.log("Signing up...");
             },
             onSuccess: (ctx) => {
-                //redirect to the dashboard or sign in page
                 console.log("Sign up successful! Redirecting...", ctx);
-                window.location.href =  "/dashboard";
+                window.location.href = "/dashboard";
             },
             onError: (ctx) => {
-                // display the error message
                 console.error("Sign up failed:", ctx.error);
                 alert(ctx.error.message);
             },
@@ -51,17 +35,17 @@ export async function signUpUser(params: SignUpParams): Promise<SignUpResult> {
     }
 }
 
-export async function handleSignUpForm(event: SubmitEvent): Promise<SignUpResult> {
+export async function handleSignUpForm(event) {
     event.preventDefault();
     
-    const form = event.target as HTMLFormElement;
+    const form = event.target;
     const formData = new FormData(form);
     
-    const params: SignUpParams = {
-        email: formData.get('email') as string,
-        password: formData.get('password') as string,
-        name: formData.get('name') as string,
-        image: (formData.get('image') as string) || undefined,
+    const params = {
+        email: formData.get('email'),
+        password: formData.get('password'),
+        name: formData.get('name'),
+        image: formData.get('image') || undefined,
     };
 
     const result = await signUpUser(params);

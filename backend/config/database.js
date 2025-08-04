@@ -22,4 +22,4 @@ mongoose.connection.on('error', (err) => {
   console.error('❌ Database Error:', err);
 });
 
-module.exports = connectDatabase;
+export default connectDatabase;
