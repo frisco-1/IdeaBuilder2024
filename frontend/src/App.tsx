@@ -1,6 +1,6 @@
  import Routing from "./components/Routing";
  import Footer from "./components/Footer";
- import NavbarComp from "./components/NavbarComponent";
+ import NavbarComp from "./components/nav-bar/NavbarComponent";
  import "bootstrap/dist/css/bootstrap.min.css";
  import '../styles/reactBootstrap.css'
 const App = () => {

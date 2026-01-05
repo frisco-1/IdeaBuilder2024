@@ -30,12 +30,14 @@ import MaxMetalLaminated from '../product-pages/MaxMetalLaminated';
 import FoamSignsLaminated from '../product-pages/FoamSignsLaminated';
 import CoroplastSignsLaminated from '../product-pages/CoroplastSignsLaminated';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
+import ProductOverview from '../pages/product-overview/ProductOverview';
 
 export default function Routing() {
   return (
     <>
       <ScrollToTop />
       <Routes>
+        <Route path="/products/:productSlug" element={<ProductOverview />} />
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/business-cards" element={<BusinessCard />} />

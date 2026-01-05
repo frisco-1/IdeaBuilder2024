@@ -1,5 +1,5 @@
 
-import HomePageCarousel from '../components/ForHomePage/HomePageCarousel';
+import HeroCarousel from '../components/ForHomePage/HeroCarousel';
 import ProductListBar from '../components/ForHomePage/ProductListBar';
 import {Row, Col} from 'react-bootstrap'; 
 import TopSellers from '../components/ForHomePage/TopSellers';
@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <div>
-        <HomePageCarousel/>
+        <HeroCarousel/>
 
         <Row className='p-5' id='margin-right-remove'>
           <Col md={3}>
