@@ -1,82 +1,83 @@
-import express from 'express';
-import schemas from '../models/schemas.js'; // ✅ must use .js extension in ESM
+// router.js
+import express from "express";
+import models from "../models/index.js";
 
 const router = express.Router();
 
-// Generic route handler for fetching data from different collections
-const createGetRoute = (modelName) => {
-  return async (req, res) => {
-    const model = schemas[modelName];
+// Convert "business_cards" → "BusinessCards"
+const toModelName = (collectionName) =>
+  collectionName.replace(/(^\w|_\w)/g, (m) => m.replace("_", "").toUpperCase());
 
-    if (!model) {
-      console.error(`Model not found: ${modelName}`);
-      return res.status(404).send(`Model not found: ${modelName}`);
-    }
+/* ---------------------------------------------
+   1. GET ALL PRODUCTS IN A CATEGORY
+   Example: GET /api/products/business_cards
+---------------------------------------------- */
+router.get("/api/products/:category", async (req, res) => {
+  const { category } = req.params;
 
-    try {
-      const data = await model.find({}).exec();
-      res.json(data);
-    } catch (error) {
-      console.error(`Error fetching data for model ${modelName}:`, error);
-      res.status(500).send(error.message);
-    }
-  };
-};
+  const modelName = toModelName(category);
+  const Model = models[modelName];
 
-// Define routes dynamically
-const routes = [
-  'keywords',
-  'business_cards',
-  'flyers',
-  'door_hangers',
-  'envelopes',
-  'letterheads',
-  'invoices',
-  'pocket_folders',
-  'recordatorios',
-  'booklets',
-  'tickets',
-  'invitations',
-  'vinyl_stickers',
-  'printed_vinyl_laminated',
-  'realtor_signs',
-  'coroplast_signs',
-  'a_frame',
-  'arrow_signs',
-  'single_arm_sign_post',
-  'roll_up_banners',
-  'custom_flags',
-  'table_covers',
-  'magnetic_signs',
-  'max_metal_laminated',
-  'foam_signs_laminated',
-  'coroplast_signs_laminated'
-];
-
-routes.forEach((route) => {
-  const modelName =
-    route.charAt(0).toUpperCase() +
-    route.slice(1).replace(/_([a-z])/g, (g) => g[1].toUpperCase());
-  router.get(`/${route}`, createGetRoute(modelName));
-});
-
-// SEARCH API
-router.get('/api/search', async (req, res) => {
-  const query = req.query.query;
-
-  if (!query) {
-    return res.status(400).json({ error: 'Query parameter is required' });
+  if (!Model) {
+    return res.status(404).json({ error: "Category not found" });
   }
 
   try {
-    const searchResults = await schemas.Keywords.find({
-      keyword: { $regex: query, $options: 'i' }
-    }).select('productName productLink');
-
-    res.json(searchResults);
+    const products = await Model.find({});
+    res.json(products);
   } catch (err) {
-    console.error('Error occurred while searching:', err);
-    res.status(500).json({ error: 'An error occurred while searching' });
+    console.error("Error fetching products:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+/* ---------------------------------------------
+   2. GET A SINGLE PRODUCT BY SLUG
+   Example: GET /api/products/business_cards/full-color-4-4-16pt
+---------------------------------------------- */
+router.get("/api/products/:category/:slug", async (req, res) => {
+  const { category, slug } = req.params;
+
+  const modelName = toModelName(category);
+  const Model = models[modelName];
+
+  if (!Model) {
+    return res.status(404).json({ error: "Category not found" });
+  }
+
+  try {
+    const product = await Model.findOne({ slug });
+
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    res.json(product);
+  } catch (err) {
+    console.error("Error fetching product:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+/* ---------------------------------------------
+   3. SEARCH API (unchanged)
+---------------------------------------------- */
+router.get("/api/search", async (req, res) => {
+  const query = req.query.query;
+
+  if (!query) {
+    return res.status(400).json({ error: "Query parameter is required" });
+  }
+
+  try {
+    const results = await models.Keywords.find({
+      keyword: { $regex: query, $options: "i" },
+    }).select("productName productLink");
+
+    res.json(results);
+  } catch (err) {
+    console.error("Search error:", err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 

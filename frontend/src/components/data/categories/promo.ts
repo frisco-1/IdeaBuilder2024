@@ -1,5 +1,5 @@
 const promotionalProducts = [
-  { name: "Table Covers", slug: "table-covers" },
+  { name: "Table Covers", slug: "table_covers" },
   { name: "Pens", slug: "pens" },
 ];
 

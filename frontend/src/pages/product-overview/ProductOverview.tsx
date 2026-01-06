@@ -1,18 +1,18 @@
-import { useParams } from "react-router-dom";
+import { useParams, Outlet } from "react-router-dom";
 
 export default function ProductOverview() {
-  const { productSlug } = useParams();
+  const { category } = useParams();
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold capitalize">
-        {productSlug?.replace(/-/g, " ")}
+        {category?.replace(/_/g, " ")}
       </h1>
 
-      {/* TODO: Load product data, show grid, etc. */}
-      <p className="mt-4 text-gray-600">
-        Product overview page for: {productSlug}
-      </p>
+      {/* Child routes render here */}
+      <div className="mt-6">
+        <Outlet />
+      </div>
     </div>
   );
 }
