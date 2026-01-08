@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ProductCarousel from "../../components/ProductCarousel";
 
 interface FixedOrder {
-  quantity: number | string;
+  quantity?: number | string;
+  label?: string;
   price: number | null;
 }
 
@@ -11,22 +13,36 @@ interface TieredPricing {
   price: number;
 }
 
+interface PerUnitItem {
+  print: number;
+  label: string;
+  price: number;
+}
+
 interface DeliveryOption {
   type: string;
   dateText: string;
+}
+
+interface AddOn {
+  name: string;
+  price: number;
+  description?: string;
 }
 
 interface Product {
   _id: string;
   name: string;
   slug: string;
-  image: string;
+  images: string[];
   description?: string;
   features?: string[];
-  pricingType: "fixed" | "tiered";
+  pricingType: "fixed" | "tiered" | "perUnit" | "hybrid";
   order?: FixedOrder[];
   pricing?: TieredPricing[];
+  pricingPerUnit?: PerUnitItem[];
   deliveryOptions?: DeliveryOption[];
+  addOns?: AddOn[];
 }
 
 export default function ProductDetailPage() {
@@ -60,13 +76,9 @@ export default function ProductDetailPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10 grid gap-10 md:grid-cols-2">
-      {/* LEFT: IMAGE */}
+      {/* LEFT: IMAGE CAROUSEL */}
       <div>
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full rounded-lg shadow"
-        />
+        <ProductCarousel images={product.images} />
       </div>
 
       {/* RIGHT: DETAILS */}
@@ -95,12 +107,14 @@ export default function ProductDetailPage() {
 
           {product.pricingType === "fixed" && product.order && (
             <ul className="space-y-1">
-              {product.order.map((o, i) => (
-                <li key={i} className="text-gray-700">
-                  {o.quantity} pcs —{" "}
-                  {o.price ? `$${o.price}` : "Contact for pricing"}
-                </li>
-              ))}
+              {product.order.map((o, i) => {
+                const display = o.label ?? `${o.quantity} pcs`;
+                return (
+                  <li key={i} className="text-gray-700">
+                    {display} — ${o.price}
+                  </li>
+                );
+              })}
             </ul>
           )}
 
@@ -113,7 +127,37 @@ export default function ProductDetailPage() {
               ))}
             </ul>
           )}
+
+          {product.pricingType === "perUnit" &&
+            product.pricingPerUnit &&
+            product.pricingPerUnit.length > 0 && (
+              <ul className="space-y-1">
+                {product.pricingPerUnit.map((p, i) => (
+                  <li key={i} className="text-gray-700">
+                    {p.label} — ${p.price} per copy
+                  </li>
+                ))}
+              </ul>
+            )}
         </div>
+
+        {/* ADD-ONS */}
+        {product.addOns && product.addOns.length > 0 && (
+          <div>
+            <h2 className="font-semibold mb-2">Add‑Ons</h2>
+            <ul className="space-y-1 text-gray-700">
+              {product.addOns.map((addon, i) => (
+                <li key={i}>
+                  <span className="font-medium">{addon.name}</span>
+                  {addon.description && (
+                    <span className="text-gray-600"> — {addon.description}</span>
+                  )}
+                  <span className="ml-2">${addon.price}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {/* DELIVERY OPTIONS */}
         {product.deliveryOptions && product.deliveryOptions.length > 0 && (

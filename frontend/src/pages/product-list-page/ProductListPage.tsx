@@ -6,22 +6,48 @@ interface OrderItem {
   price: number | null;
 }
 
+interface PerUnitItem {
+  print: number;
+  label: string;
+  price: number;
+}
+
 interface Product {
   _id: string;
   name: string;
   slug: string;
-  image: string;
+  images: string[];
   shortDescription?: string;
   code?: string;
   order?: OrderItem[];
+  pricing?: { quantityRange: string; price: number }[];
+  pricingType: "fixed" | "tiered" | "perUnit" | "hybrid";
+  pricingPerUnit?: PerUnitItem[];
 }
 
 // Extract numeric portion from product code
-//Probably can make this into a react component (idk yet)
 function extractCodeNumber(code?: string): number {
   if (!code) return Infinity;
   const num = parseInt(code.replace(/\D+/g, ""), 10);
   return isNaN(num) ? Infinity : num;
+}
+
+// Get starting price for list view
+function getStartingPrice(product: Product): string {
+  if (product.pricingType === "fixed" && product.order?.length) {
+    return `Starting at $${product.order[0].price}`;
+  }
+
+  if (product.pricingType === "tiered" && product.pricing?.length) {
+    return `$${product.pricing[0].price}`;
+  }
+
+  if (product.pricingType === "perUnit" && product.pricingPerUnit?.length) {
+    const lowest = Math.min(...product.pricingPerUnit.map((p) => p.price));
+    return `$${lowest} per copy`;
+  }
+
+  return "Contact us for pricing";
 }
 
 export default function ProductListPage() {
@@ -49,10 +75,9 @@ export default function ProductListPage() {
     return <div className="p-8 text-center">Loading products…</div>;
   }
 
-  // Sort products by numeric portion of product code
-  const sortedProducts = [...products].sort((a, b) => {
-    return extractCodeNumber(a.code) - extractCodeNumber(b.code);
-  });
+  const sortedProducts = [...products].sort(
+    (a, b) => extractCodeNumber(a.code) - extractCodeNumber(b.code)
+  );
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
@@ -62,7 +87,7 @@ export default function ProductListPage() {
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {sortedProducts.map((product) => {
-          const firstPrice = product.order?.[0]?.price ?? null;
+          const productImage = product.images?.[0] ?? "/placeholder.png";
 
           return (
             <Link
@@ -71,7 +96,7 @@ export default function ProductListPage() {
               className="border rounded-lg overflow-hidden shadow hover:shadow-lg transition"
             >
               <img
-                src={product.image}
+                src={productImage}
                 alt={product.name}
                 className="w-full h-48 object-cover"
               />
@@ -79,19 +104,16 @@ export default function ProductListPage() {
               <div className="p-4 space-y-2">
                 <h2 className="font-semibold text-lg">{product.name}</h2>
 
-                {/* Product Code */}
                 {product.code && (
                   <p className="text-xs text-gray-500">Code: {product.code}</p>
                 )}
 
-                {/* Short Description */}
-                <p className="text-sm text-gray-600">{product.shortDescription}</p>
+                <p className="text-sm text-gray-600">
+                  {product.shortDescription}
+                </p>
 
-                {/* Starting Price */}
                 <p className="text-sm font-medium text-gray-800">
-                  {firstPrice
-                    ? `Starting at $${firstPrice}`
-                    : "Contact us for pricing"}
+                  {getStartingPrice(product)}
                 </p>
               </div>
             </Link>

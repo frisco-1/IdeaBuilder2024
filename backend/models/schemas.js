@@ -6,26 +6,31 @@ const { Schema } = mongoose;
 // Shared sub-schema for quantity/price
 const orderSchema = new Schema({
   quantity: {
-    type: [Number, String],
-    required: true,
+    type: Schema.Types.Mixed, // allows number or string
+    required: false,
+  },
+  label: {
+    type: String,
+    required: false,
   },
   price: {
     type: Number,
-    default: null,
-  },
+    required: true,
+  }
 });
+
 
 // Main product schema (for catalog items like business cards, flyers, booklets, etc.)
 export const productSchema = new Schema({
   name: { type: String, required: true },
   slug: { type: String, required: true }, // for URLs
   code: { type: String, required: true },
-  image: { type: String, required: true },
+  image: { type: [String], required: true },
 
   // Pricing model
   pricingType: {
     type: String,
-    enum: ["fixed", "tiered"],
+    enum: ["fixed", "tiered", "hybrid", "perUnit"],
     required: true,
   },
 
@@ -35,12 +40,39 @@ export const productSchema = new Schema({
     required: false,
   },
 
+  pricingPerUnit: {
+    type: [
+      {
+        print: { type: Number, required: true },
+        label: { type: String, required: true },
+        price: { type: Number, required: true }
+      }
+    ],
+    required: false
+  },
+
   // Tiered pricing (e.g. 25–49, 50–99, 100+)
   pricing: {
     type: [
       {
         quantityRange: { type: String },
         price: { type: Number },
+      },
+    ],
+    required: false,
+  },
+
+  // Additional options/add-ons
+  /*Components that use this attribute:
+  Magnetic Signs
+  */
+ 
+  addOns: {
+    type: [
+      {
+        name: { type: String },
+        price: { type: Number },
+        description: { type: String },
       },
     ],
     required: false,

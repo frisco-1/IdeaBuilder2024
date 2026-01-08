@@ -11,6 +11,7 @@ const stationeryProducts = [
   { name: "Reminders", slug: "reminders" },
   { name: "Tickets", slug: "tickets" },
   { name: "Menus", slug: "menus" },
+  { name: "Letterheads", slug: "letterheads" },
 ];
 
 export default stationeryProducts;

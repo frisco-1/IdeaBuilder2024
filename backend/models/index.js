@@ -37,14 +37,18 @@ const productCollections = [
   "letterheads",
   "invoices",
   "pocket_folders",
-  "recordatorios",
+  "reminders",
   "vinyl_stickers",
   "booklets",
+  "tickets",
+  "copies",
+  "magnetic_signs",
+  "cut_vinyl",
 ];
 
 // Collections that use the lite product schema
 const liteCollections = [
-  "tickets",
+
   "printed_vinyl_laminated",
   "realtor_signs",
   "coroplast_signs",
@@ -54,7 +58,6 @@ const liteCollections = [
   "roll_up_banners",
   "custom_flags",
   "table_covers",
-  "magnetic_signs",
   "max_metal_laminated",
   "foam_signs_laminated",
   "coroplast_signs_laminated",
