@@ -1,4 +1,4 @@
-// models/schemas.js
+// models/productSchemas.js
 import mongoose from "mongoose";
 
 const { Schema } = mongoose;
@@ -26,6 +26,8 @@ export const productSchema = new Schema({
   slug: { type: String, required: true }, // for URLs
   code: { type: String, required: true },
   image: { type: [String], required: true },
+  category: { type: String, required: true },
+productGroup: { type: String, required: true },
 
   // Pricing model
   pricingType: {
@@ -90,31 +92,4 @@ export const productSchema = new Schema({
       },
     ],
   },
-});
-
-// Lite product schema (simpler items like signs, tickets, etc.)
-export const liteProductSchema = new Schema({
-  code: { type: String, required: true },
-  quantity: { type: Number, required: true },
-  name: { type: String },
-  price: { type: Number, default: null },
-  image: { type: String },
-  description: { type: String },
-});
-
-// Invitations schema
-export const invitationSchema = new Schema({
-  name: { type: String, required: true },
-  code: { type: String, required: true },
-  order: { type: [orderSchema], required: true },
-  envelopeFee: { type: Number },
-  extraQuantityFee: { type: Number },
-  image: { type: String },
-});
-
-// Keywords schema (for search)
-export const keywordsSchema = new Schema({
-  keyword: { type: String, required: true },
-  productLink: { type: String, required: true },
-  productName: { type: String, required: true },
 });

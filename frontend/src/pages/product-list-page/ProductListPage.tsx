@@ -39,7 +39,7 @@ function getStartingPrice(product: Product): string {
   }
 
   if (product.pricingType === "tiered" && product.pricing?.length) {
-    return `$${product.pricing[0].price}`;
+    return `Starting at $${product.pricing[0].price}`;
   }
 
   if (product.pricingType === "perUnit" && product.pricingPerUnit?.length) {
@@ -51,15 +51,37 @@ function getStartingPrice(product: Product): string {
 }
 
 export default function ProductListPage() {
-  const { category } = useParams<{ category: string }>();
+  const { categorySlug, productGroupSlug  } = useParams<{
+    categorySlug: string;
+    productGroupSlug : string;
+  }>();
+
+  if (!categorySlug || !productGroupSlug ) {
+    return <div className="p-8 text-center">Invalid URL</div>;
+  }
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch(`/api/products/${category}`);
+        const res = await fetch(
+          `/api/category/${categorySlug}/${productGroupSlug}`
+        );
+
+        if (!res.ok) {
+          setProducts([]);
+          return;
+        }
+
         const data = await res.json();
+
+        if (!Array.isArray(data)) {
+          setProducts([]);
+          return;
+        }
+
         setProducts(data);
       } catch (err) {
         console.error("Error fetching products:", err);
@@ -69,10 +91,27 @@ export default function ProductListPage() {
     }
 
     fetchProducts();
-  }, [category]);
+  }, [categorySlug, productGroupSlug]);
 
   if (loading) {
     return <div className="p-8 text-center">Loading products…</div>;
+  }
+
+  if (!products.length) {
+    return (
+      <div className="p-10 text-center">
+        <h2 className="text-xl font-semibold mb-2">No products found</h2>
+        <p className="text-gray-600 mb-4">
+          This product group may not exist or has no products yet.
+        </p>
+        <Link
+          to="/"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        >
+          Go Home
+        </Link>
+      </div>
+    );
   }
 
   const sortedProducts = [...products].sort(
@@ -82,7 +121,7 @@ export default function ProductListPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <h1 className="text-2xl font-bold mb-6 capitalize">
-        {category?.replace(/_/g, " ")}
+        {productGroupSlug .replace(/_/g, " ")}
       </h1>
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
@@ -92,7 +131,7 @@ export default function ProductListPage() {
           return (
             <Link
               key={product._id}
-              to={`/products/${category}/${product.slug}`}
+              to={`/products/category/${categorySlug}/${productGroupSlug }/${product.slug}`}
               className="border rounded-lg overflow-hidden shadow hover:shadow-lg transition"
             >
               <img

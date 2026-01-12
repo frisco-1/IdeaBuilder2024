@@ -1,23 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CategoryRow from "./ui/CategoryRow";
 import ProductGrid from "./ui/ProductGrid";
 
-import apparel from "../../data/categories/apparel";
-import dtf from "../../data/categories/dtf";
-import stationery from "../../data/categories/stationery";
-import signage from "../../data/categories/signage";
-import promo from "../../data/categories/promo";
-
-const categories = [
-  { name: "Custom Apparel", products: apparel },
-  { name: "DTF Products", products: dtf },
-  { name: "Stationery Items", products: stationery },
-  { name: "Signs & Banners", products: signage },
-  { name: "Promotional Products", products: promo },
-];
+interface CategoryMeta {
+  name: string;
+  slug: string;
+  items: { name: string; slug: string }[];
+}
 
 export default function CategoryBar() {
+  const [categories, setCategories] = useState<CategoryMeta[]>([]);
   const [hoveredCategoryIndex, setHoveredCategoryIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/category");
+        const data = await res.json();
+
+        const formatted = Object.values(data).map((cat: any) => ({
+          name: cat.name,
+          slug: cat.slug,
+          items: cat.items,
+        }));
+
+        setCategories(formatted);
+      } catch (err) {
+        console.error("Failed to load categories:", err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   return (
     <div className="relative z-30">
@@ -27,12 +41,15 @@ export default function CategoryBar() {
         setHoveredIndex={setHoveredCategoryIndex}
       />
 
-      {hoveredCategoryIndex !== null && (
-        <ProductGrid
-          products={categories[hoveredCategoryIndex].products}
-          hoveredIndex={hoveredCategoryIndex}
-          setHoveredIndex={setHoveredCategoryIndex}
-        />
+      {hoveredCategoryIndex !== null &&
+        categories[hoveredCategoryIndex] &&
+        categories[hoveredCategoryIndex].items && (
+          <ProductGrid
+            categorySlug={categories[hoveredCategoryIndex].slug}
+            products={categories[hoveredCategoryIndex].items}
+            hoveredIndex={hoveredCategoryIndex}
+            setHoveredIndex={setHoveredCategoryIndex}
+          />
       )}
     </div>
   );

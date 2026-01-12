@@ -46,25 +46,38 @@ interface Product {
 }
 
 export default function ProductDetailPage() {
-  const { category, slug } = useParams<{ category: string; slug: string }>();
+   const { categorySlug, productGroupSlug, productSlug } = useParams<{
+  categorySlug: string; //ex. stationery-items
+  productGroupSlug: string; //ex. business_cards
+  productSlug: string; //ex. full-color-4-0
+}>();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchProduct() {
-      try {
-        const res = await fetch(`/api/products/${category}/${slug}`);
-        const data = await res.json();
-        setProduct(data);
-      } catch (err) {
-        console.error("Error fetching product:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
+  async function fetchProduct() {
+    try {
+      const res = await fetch(
+        `/api/category/${categorySlug}/${productGroupSlug}/${productSlug}`
+      );
 
-    fetchProduct();
-  }, [category, slug]);
+      if (!res.ok) {
+        setProduct(null);
+        return;
+      }
+
+      const data = await res.json();
+      setProduct(data);
+    } catch (err) {
+      console.error("Error fetching product:", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  fetchProduct();
+}, [categorySlug, productGroupSlug, productSlug]);
+
 
   if (loading) {
     return <div className="p-8 text-center">Loading product…</div>;

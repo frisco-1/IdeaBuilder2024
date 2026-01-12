@@ -1,52 +1,61 @@
-// router.js
+// backend/routes/router.js
 import express from "express";
-import models from "../models/index.js";
+import {  Category } from "../models/index.js";  // ✅ FIXED
+import { getCatalogModel } from "../models/catalogModels.js";
+
+
 
 const router = express.Router();
 
-// Convert "business_cards" → "BusinessCards"
-const toModelName = (collectionName) =>
-  collectionName.replace(/(^\w|_\w)/g, (m) => m.replace("_", "").toUpperCase());
-
-/* ---------------------------------------------
-   1. GET ALL PRODUCTS IN A CATEGORY
-   Example: GET /api/products/business_cards
----------------------------------------------- */
-router.get("/api/products/:category", async (req, res) => {
-  const { category } = req.params;
-
-  const modelName = toModelName(category);
-  const Model = models[modelName];
-
-  if (!Model) {
-    return res.status(404).json({ error: "Category not found" });
-  }
-
+// GET ALL CATEGORIES FOR THE NAVBAR
+router.get("/api/category", async (req, res) => {
   try {
-    const products = await Model.find({});
-    res.json(products);
+    const categories = await Category.find({}); // fetch ALL documents
+
+    res.json(categories);
   } catch (err) {
-    console.error("Error fetching products:", err);
+    console.error("Category list fetch error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-/* ---------------------------------------------
-   2. GET A SINGLE PRODUCT BY SLUG
-   Example: GET /api/products/business_cards/full-color-4-4-16pt
----------------------------------------------- */
-router.get("/api/products/:category/:slug", async (req, res) => {
-  const { category, slug } = req.params;
+/* ---------------------------------------------------------
+   GET ALL PRODUCTS IN A PRODUCT GROUP
+--------------------------------------------------------- */
+router.get("/api/category/:categorySlug/:productGroupSlug", async (req, res) => {
+  const { productGroupSlug } = req.params;
 
-  const modelName = toModelName(category);
-  const Model = models[modelName];
-
+  const Model = getCatalogModel(productGroupSlug);
   if (!Model) {
-    return res.status(404).json({ error: "Category not found" });
+    return res.status(404).json({ error: "Invalid product group" });
   }
 
   try {
-    const product = await Model.findOne({ slug });
+    const products = await Model.find({});
+    if (!products.length) {
+      return res.status(404).json({ error: "No products found" });
+    }
+
+    res.json(products);
+  } catch (err) {
+    console.error("Product group fetch error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+/* ---------------------------------------------------------
+   GET A SINGLE PRODUCT
+--------------------------------------------------------- */
+router.get("/api/category/:categorySlug/:productGroupSlug/:productSlug", async (req, res) => {
+  const { productGroupSlug, productSlug } = req.params;
+
+  const Model = getCatalogModel(productGroupSlug);
+  if (!Model) {
+    return res.status(404).json({ error: "Invalid product group" });
+  }
+
+  try {
+    const product = await Model.findOne({ slug: productSlug });
 
     if (!product) {
       return res.status(404).json({ error: "Product not found" });
@@ -54,29 +63,27 @@ router.get("/api/products/:category/:slug", async (req, res) => {
 
     res.json(product);
   } catch (err) {
-    console.error("Error fetching product:", err);
+    console.error("Product fetch error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-/* ---------------------------------------------
-   3. SEARCH API (unchanged)
----------------------------------------------- */
-router.get("/api/search", async (req, res) => {
-  const query = req.query.query;
 
-  if (!query) {
-    return res.status(400).json({ error: "Query parameter is required" });
-  }
+
+// 1. GET CATEGORY OVERVIEW
+router.get("/api/category/:categorySlug", async (req, res) => {
+  const { categorySlug } = req.params;
 
   try {
-    const results = await models.Keywords.find({
-      keyword: { $regex: query, $options: "i" },
-    }).select("productName productLink");
+    const category = await Category.findOne({ slug: categorySlug });  // ✅ FIXED
 
-    res.json(results);
+    if (!category) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    res.json(category);
   } catch (err) {
-    console.error("Search error:", err);
+    console.error("Category fetch error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });

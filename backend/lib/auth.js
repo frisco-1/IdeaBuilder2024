@@ -4,9 +4,9 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import 'dotenv/config';
 
 // ✅ Ensure DB URI is provided
-const dbUri = process.env.DB_URI;
+const dbUri = process.env.DB_CATALOG;
 if (!dbUri) {
-  throw new Error('DB_URI environment variable is required');
+  throw new Error('DB_CATALOG environment variable is required');
 }
 
 console.log("✅ BetterAuth initialized, endpoints should be active.");
