@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
 interface CategoryItem {
   name: string;
@@ -46,7 +47,9 @@ export default function CategoryOverviewPage() {
 
   return (
     <div>
+      <Breadcrumbs />
       {/* HERO SECTION */}
+      
       <div className="relative w-full h-72 md:h-96">
         <img
           src={category.images[0] || "/placeholder-banner.jpg"}

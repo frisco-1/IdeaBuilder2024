@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductCarousel from "../../components/ProductCarousel";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
 interface FixedOrder {
   quantity?: number | string;
@@ -88,6 +89,8 @@ export default function ProductDetailPage() {
   }
 
   return (
+    <>
+    <Breadcrumbs />
     <div className="max-w-5xl mx-auto px-4 py-10 grid gap-10 md:grid-cols-2">
       {/* LEFT: IMAGE CAROUSEL */}
       <div>
@@ -192,5 +195,6 @@ export default function ProductDetailPage() {
         </button>
       </div>
     </div>
+    </>
   );
 }

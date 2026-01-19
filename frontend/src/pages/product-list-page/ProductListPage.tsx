@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
 interface OrderItem {
   quantity: number | string;
@@ -119,6 +120,8 @@ export default function ProductListPage() {
   );
 
   return (
+    <>
+    <Breadcrumbs />
     <div className="max-w-6xl mx-auto px-4 py-10">
       <h1 className="text-2xl font-bold mb-6 capitalize">
         {productGroupSlug .replace(/_/g, " ")}
@@ -160,5 +163,6 @@ export default function ProductListPage() {
         })}
       </div>
     </div>
+    </>
   );
 }
