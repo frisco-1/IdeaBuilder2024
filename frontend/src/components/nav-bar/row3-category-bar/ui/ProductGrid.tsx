@@ -32,7 +32,7 @@ const ProductGrid: FC<ProductGridProps> = ({
             return (
               <Link
                 key={`${product.slug}-${index}`} // ✅ Unique key
-                to={`/products/category/${categorySlug}/${product.slug}`}
+                to={`/${categorySlug}/${product.slug}`}
                 className="text-sm px-4 py-3 rounded border text-black hover:bg-[#E9252E] hover:text-white transition text-center wrap-break-word whitespace-normal"
               >
                 {product.name}

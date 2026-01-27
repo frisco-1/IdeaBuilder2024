@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import SearchBar from '../row2-main-header/SearchBar';
+import SearchBar from '../../SearchBar';
 import HamburgerMenu from '../HamburgerMenu';
 import RightActions from '../row2-main-header/RightActions';
 import CategoryBar from '../row3-category-bar/CategoryBar';

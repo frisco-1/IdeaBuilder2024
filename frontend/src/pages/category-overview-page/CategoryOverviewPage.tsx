@@ -13,7 +13,7 @@ interface CategoryData {
   slug: string;
   header: string;
   description: string[];
-  images: string[];
+  images: string[]; // may contain image or video URLs
   items: CategoryItem[];
 }
 
@@ -27,9 +27,8 @@ export default function CategoryOverviewPage() {
         const res = await fetch("/api/category");
         const data = await res.json();
 
-        // Find category by slug
         const found = Object.values(data).find(
-        (cat: any) => cat.slug === categorySlug
+          (cat: any) => cat.slug === categorySlug
         ) as CategoryData;
 
         setCategory(found);
@@ -45,22 +44,36 @@ export default function CategoryOverviewPage() {
     return <div className="p-10 text-center">Loading category…</div>;
   }
 
+  // Determine if hero media is a video
+  const heroMedia = category.images[0] || "/placeholder-banner.jpg";
+  const isVideo = /\.(mp4|webm|ogg)$/i.test(heroMedia);
+
   return (
     <div>
       <Breadcrumbs />
-      {/* HERO SECTION */}
-      
-      <div className="relative w-full h-72 md:h-96">
-        <img
-          src={category.images[0] || "/placeholder-banner.jpg"}
-          className="w-full h-full object-cover"
-        />
 
-        <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-white px-4">
+      {/* HERO SECTION */}
+      <div className="relative w-full h-72 md:h-96 overflow-hidden">
+        {isVideo ? (
+          <video
+            src={heroMedia}
+            className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : (
+          <img
+            src={heroMedia}
+            className="w-full h-full object-cover"
+            alt={category.name}
+          />
+        )}
+
+        <div className="absolute inset-0 bg-black/60 flex flex-col justify-center items-center text-white px-4">
           <h1 className="text-4xl font-bold mb-4">{category.name}</h1>
-          <p className="max-w-2xl text-center text-lg">
-            {category.header}
-          </p>
+          <p className="max-w-2xl text-center text-lg">{category.header}</p>
         </div>
       </div>
 
@@ -76,7 +89,7 @@ export default function CategoryOverviewPage() {
         {category.items.map((item) => (
           <Link
             key={item.slug}
-            to={`/products/category/${category.slug}/${item.slug}`}
+            to={`/${category.slug}/${item.slug}`}
             className="border p-4 rounded hover:bg-[#E9252E] hover:text-white transition text-center"
           >
             {item.name}

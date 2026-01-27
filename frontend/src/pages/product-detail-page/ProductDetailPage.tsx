@@ -59,7 +59,7 @@ export default function ProductDetailPage() {
   async function fetchProduct() {
     try {
       const res = await fetch(
-        `/api/category/${categorySlug}/${productGroupSlug}/${productSlug}`
+        `/api/${categorySlug}/${productGroupSlug}/${productSlug}`
       );
 
       if (!res.ok) {

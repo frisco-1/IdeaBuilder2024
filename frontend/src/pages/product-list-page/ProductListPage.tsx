@@ -68,7 +68,7 @@ export default function ProductListPage() {
     async function fetchProducts() {
       try {
         const res = await fetch(
-          `/api/category/${categorySlug}/${productGroupSlug}`
+          `/api/${categorySlug}/${productGroupSlug}`
         );
 
         if (!res.ok) {
@@ -134,7 +134,7 @@ export default function ProductListPage() {
           return (
             <Link
               key={product._id}
-              to={`/products/category/${categorySlug}/${productGroupSlug }/${product.slug}`}
+              to={`/${categorySlug}/${productGroupSlug }/${product.slug}`}
               className="border rounded-lg overflow-hidden shadow hover:shadow-lg transition"
             >
               <img

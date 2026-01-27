@@ -92,4 +92,15 @@ productGroup: { type: String, required: true },
       },
     ],
   },
+
+  searchResult: {
+    type: {
+      type: String,
+      enum: ["product"],
+      default: "product"
+    },
+    name: { type: String },
+    url: { type: String }
+  },
+
 });

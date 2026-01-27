@@ -27,7 +27,7 @@ export default function CategoryRow({
           return (
             <Link
               key={`${cat.slug}-${index}`} // ✅ Unique key
-              to={`/products/category/${cat.slug}`}
+              to={`/${cat.slug}`}
               onMouseEnter={() => setHoveredIndex(index)}
               className={`text-sm font-medium px-3 py-1 rounded transition ${
                 hoveredIndex === index

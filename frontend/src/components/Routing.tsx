@@ -1,16 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 
 import Home from "../pages/home/Home.tsx";
-import SearchPage from "../search-page(will-delete-soon-or-refactor)/SearchPage.tsx";
 import SignIn from "../pages/SignInPage/SignIn";
 import ScrollToTop from "./ScrollToTop";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 
 import CategoryOverviewPage from "../pages/category-overview-page/CategoryOverviewPage.tsx";
 import ProductListPage from "../pages/product-list-page/ProductListPage.tsx";
-import ProductDetailPage from "../pages/product-detail-page/ProductDetailPage.tsx";
-
 import NotFoundPage from "../pages/error-not-found-page/NotFoundPage.tsx";
+import DynamicProductDetailRouter from "./DynamicProductDetailRouter.tsx";
 
 export default function Routing() {
   return (
@@ -21,8 +19,7 @@ export default function Routing() {
         {/* HOME */}
         <Route path="/" element={<Home />} />
 
-        {/* SEARCH */}
-        <Route path="/search" element={<SearchPage />} />
+      
 
         {/* AUTH */}
         <Route path="/sign-in" element={<SignIn />} />
@@ -30,21 +27,22 @@ export default function Routing() {
 
         {/* CATEGORY OVERVIEW PAGE */}
         <Route
-          path="/products/category/:categorySlug"
+          path="/:categorySlug"
           element={<CategoryOverviewPage />}
         />
 
         {/* PRODUCT LIST PAGE */}
         <Route
-          path="/products/category/:categorySlug/:productGroupSlug"
+          path="/:categorySlug/:productGroupSlug"
           element={<ProductListPage />}
         />
 
         {/* PRODUCT DETAIL PAGE */}
         <Route
-        path="/products/category/:categorySlug/:productGroupSlug/:productSlug"
-        element={<ProductDetailPage />}
-      />
+          path="/:categorySlug/:productGroupSlug/:productSlug"
+          element={<DynamicProductDetailRouter />}
+        />
+
 
 
         {/* 404 */}

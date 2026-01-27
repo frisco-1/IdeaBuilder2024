@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 /* ---------------------------------------------
    MAIN APPLICATION ROUTES
 ---------------------------------------------- */
-app.use('/', router);
+app.use('/api', router);
 /* ---------------------------------------------
    DATABASE CONNECTIONS
    Connect to:

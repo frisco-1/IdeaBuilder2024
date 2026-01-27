@@ -33,3 +33,9 @@ export default {
 Logic and Conventions I implmented:
 
 I seperated the pages into their own folders and components to their own. The pages are completed frontend experiences while the components are sections I created to implment into various parts of the pages.
+
+Search Bar:
+Features:
+-debouncing
+-fuzzy matching
+-auto complete
