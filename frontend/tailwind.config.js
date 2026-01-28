@@ -9,4 +9,11 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  safelist: [
+    "border-[3px]",
+    "border-[#E9252E]",
+    "scale-110"
+
+  ],
+
 };

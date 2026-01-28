@@ -228,190 +228,210 @@ useEffect(() => {
      UI LAYOUT
   ------------------------------------------------------- */
 
-  return (
-    <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 p-6">
+return (
+  <div className="max-w-screen-xl mx-auto px-4 py-6 space-y-6">
 
-      {/* LEFT — IMAGE */}
-      <div className="flex justify-center">
-        <div className="relative w-80 h-96 rounded-xl shadow-lg bg-gray-200 flex items-center justify-center">
+    {/* TOP GRID: IMAGE + OPTIONS */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      {/* QUADRANT 1: IMAGE */}
+      <div className="flex justify-center items-start">
+        <div className="relative w-72 h-80 rounded-xl shadow-lg bg-gray-200 flex items-center justify-center">
           <span className="font-bold text-white text-xl drop-shadow">
             Your DESIGN Here
           </span>
         </div>
       </div>
 
-      {/* RIGHT — DETAILS */}
-      <div className="flex flex-col gap-6">
+      {/* QUADRANT 2: OPTIONS */}
+      <div className="space-y-3">
 
         {/* BRAND + LOGO */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h2 className="text-xl font-semibold">{product.brand}</h2>
-            <p className="text-gray-500">{product.code}</p>
+        <div className="flex items-center justify-between text-sm mb-1">
+          <div className="flex items-center gap-2 leading-tight">
+            <span className="font-medium">{product.brand}</span>
+            <span className="text-xs text-gray-500">{product.code}</span>
           </div>
 
           {product.brand_logo && (
             <img
               src={product.brand_logo}
               alt="brand logo"
-              className="w-12 h-12 object-contain"
+              className="w-8 h-8 object-contain"
             />
           )}
         </div>
 
         {/* PRODUCT NAME */}
-        <h1 className="text-2xl font-bold">{product.name}</h1>
+        <h4 className="text-base font-bold">{product.name}</h4>
 
         {/* DECORATION METHODS */}
         <div>
           <p className="uppercase text-sm font-semibold mb-2">Decoration</p>
-          <div className="flex gap-3">
-            {product.decorationMethods.map((m) => (
-              <button
-                key={m.method}
-                onClick={() => {
-                  setDecorationMethod(m.method);
-                  setDecorationVariant(null);
-                  setPrintSide(null);
-                }}
-                className={`px-4 py-2 rounded-lg border text-sm ${
-                  decorationMethod === m.method
-                    ? "bg-blue-600 text-white border-blue-600"
-                    : "border-gray-300"
-                }`}
-              >
-                {m.method}
-              </button>
-            ))}
+          <div className="flex flex-wrap gap-2">
+            {product.decorationMethods.map((m) => {
+              const isSelected = decorationMethod === m.method;
+
+              return (
+                <button
+                  key={m.method}
+                  onClick={() => {
+                    setDecorationMethod(m.method);
+                    setDecorationVariant(null);
+                    setPrintSide(null);
+                  }}
+                  className={`
+                    px-3 py-1 rounded-lg text-sm
+                    ${isSelected ? "border-[3px] border-[#E9252E]" : "border border-gray-300"}
+                    hover:bg-gray-100
+                  `}
+                >
+                  {m.method}
+                </button>
+              );
+            })}
           </div>
         </div>
 
-       
-            {/* VARIANT OPTIONS */}
-    {decorationMethod && (
-      <div className="mb-4">
-        <p className="uppercase text-sm font-semibold mb-2">
-          {decorationMethod === "Screen Printing"
-            ? "Ink Color Count"
-            : "Decoration Type"}
-        </p>
-
-        <div className="flex gap-3 mb-2">
-          {Object.keys(
-            product.decorationMethods.find((m) => m.method === decorationMethod)!.options
-          ).map((variant) => {
-            const isScreenPrinting = decorationMethod === "Screen Printing";
-            const isSelected = decorationVariant === variant;
-            const isSingleJob = variant === "single_job";
-
-            return (
-              <button
-                key={variant}
-                onClick={() => {
-                  if (isScreenPrinting) setDecorationVariant(variant);
-                }}
-                disabled={!isScreenPrinting}
-                className={`
-                  px-4 py-2 rounded-lg border text-sm
-                  ${isSelected
-                    ? "bg-blue-600 text-white border-blue-600"
-                    : isScreenPrinting
-                    ? "border-gray-300 hover:bg-gray-100"
-                    : "border-gray-300 bg-gray-100 text-gray-500 cursor-not-allowed"
-                  }
-                `}
-              >
-                {variant.replace("_", " ")}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* DTF Placement Counter */}
-        {decorationMethod === "DTF" && decorationVariant === "single_job" && (
+        {/* VARIANT OPTIONS */}
+        {decorationMethod && (
           <div>
             <p className="uppercase text-sm font-semibold mb-2">
-              Number of DTF Placements
+              {decorationMethod === "Screen Printing" ? "Paint Count" : "Decoration Type"}
             </p>
-            <input
-              type="number"
-              min={1}
-              className="w-24 border rounded p-2"
-              value={dtfPlacementCount}
-              onChange={(e) =>
-                setDtfPlacementCount(Math.max(1, parseInt(e.target.value) || 1))
-              }
-            />
+
+            <div className="flex flex-wrap gap-2 mb-2">
+              {Object.keys(
+                product.decorationMethods.find((m) => m.method === decorationMethod)!.options
+              ).map((variant) => {
+                const isScreenPrinting = decorationMethod === "Screen Printing";
+                const isSelected = decorationVariant === variant;
+
+                return (
+                  <button
+                    key={variant}
+                    onClick={() => {
+                      if (isScreenPrinting) setDecorationVariant(variant);
+                    }}
+                    disabled={!isScreenPrinting}
+                    className={`
+                      px-3 py-1 rounded-lg text-sm
+                      ${isSelected ? "border-[3px] border-[#E9252E]" : "border border-gray-300"}
+                      ${!isScreenPrinting ? "bg-gray-100 text-gray-500 cursor-not-allowed" : "hover:bg-gray-100"}
+                    `}
+                  >
+                    {variant.replace("_", " ")}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* DTF Placement Counter */}
+            {decorationMethod === "DTF" && decorationVariant === "single_job" && (
+              <div>
+                <p className="uppercase text-sm font-semibold mb-2">
+                  Number of DTF Placements
+                </p>
+                <input
+                  type="number"
+                  min={1}
+                  className="w-24 border rounded-lg p-2"
+                  value={dtfPlacementCount}
+                  onChange={(e) =>
+                    setDtfPlacementCount(Math.max(1, parseInt(e.target.value) || 1))
+                  }
+                />
+              </div>
+            )}
           </div>
         )}
-      </div>
-    )}
 
         {/* PRINT SIDE */}
         {decorationMethod !== "Embroidery" && decorationVariant && (
           <div>
             <p className="uppercase text-sm font-semibold mb-2">Print Side</p>
-            <div className="flex gap-4">
-              {["1 SIDE", "2 SIDES"].map((side) => (
-                <button
-                  key={side}
-                  onClick={() => setPrintSide(side as "1 SIDE" | "2 SIDES")}
-                  className={`px-4 py-2 rounded-lg border text-sm ${
-                    printSide === side
-                      ? "bg-blue-600 text-white border-blue-600"
-                      : "border-gray-300"
-                  }`}
-                >
-                  {side}
-                </button>
-              ))}
+            <div className="flex gap-2">
+              {["1 SIDE", "2 SIDES"].map((side) => {
+                const isSelected = printSide === side;
+
+                return (
+                  <button
+                    key={side}
+                    onClick={() => setPrintSide(side as "1 SIDE" | "2 SIDES")}
+                    className={`
+                      px-3 py-1 rounded-lg text-sm
+                      ${isSelected ? "border-[3px] border-[#E9252E]" : "border border-gray-300"}
+                      hover:bg-gray-100
+                    `}
+                  >
+                    {side}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
 
-        {/* COLORS */}
+        {/* SHIRT COLOR */}
         <div>
-          <p className="uppercase text-sm font-semibold mb-2">Colors</p>
-          <div className="flex flex-wrap gap-3 max-h-64 overflow-y-auto p-2">
-            {product.colors.map((c) => (
-              <div
-                key={c.hex}
-                onClick={() => setSelectedColor(c.hex)}
-                className={`w-8 h-8 rounded-md cursor-pointer border transition-transform ${
-                  selectedColor === c.hex
-                    ? "border-black scale-110"
-                    : "border-gray-300"
-                }`}
-                style={{ backgroundColor: c.hex }}
-                title={c.name}
-              />
-            ))}
+          <div className="flex items-center justify-between mb-2">
+            <p className="uppercase text-sm font-semibold">Shirt Color</p>
+
+            <span className="text-xs text-gray-600">
+              Selected Color: {selectedColor
+                ? product.colors.find((c) => c.hex === selectedColor)?.name
+                : "None"}
+            </span>
+          </div>
+
+          <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-1">
+            {product.colors.map((c) => {
+              const isSelected = selectedColor === c.hex;
+
+              return (
+                <div
+                  key={c.hex}
+                  onClick={() => setSelectedColor(c.hex)}
+                  className={`
+                    w-8 h-8 rounded-lg cursor-pointer transition-transform
+                    ${isSelected 
+                      ? "border-[3px] border-[#E9252E] scale-110" 
+                      : "border border-gray-300"
+                    }
+                  `}
+                  style={{ backgroundColor: c.hex }}
+                  title={c.name}
+                />
+
+              );
+            })}
           </div>
         </div>
 
         {/* SIZES */}
         <div>
           <p className="uppercase text-sm font-semibold mb-2">Available Sizes</p>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
+          <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
             {product.sizes.map((size) => (
               <div key={size} className="flex flex-col items-center">
-                <span className="font-semibold">{size}</span>
+                <span className="font-semibold text-sm">{size}</span>
                 <input
                   type="number"
                   min="0"
-                  className="w-16 border rounded p-1 text-center"
+                  className="w-12 border rounded-lg p-1 text-center text-sm"
                   value={sizeQuantities[size] || ""}
                   onChange={(e) => handleQuantityChange(size, e.target.value)}
                 />
               </div>
             ))}
           </div>
+
         </div>
 
         {/* PRICE */}
-        <div className="p-4 border rounded-lg bg-gray-50">
+        <div className="p-3 border rounded-lg bg-gray-50">
           <p className="text-sm font-semibold">Price</p>
-          <p className="text-2xl font-bold">
+          <p className="text-xl font-bold">
             {totalPrice.toLocaleString("en-US", {
               style: "currency",
               currency: "USD",
@@ -419,25 +439,24 @@ useEffect(() => {
           </p>
           <p className="text-gray-500 text-sm">Total Qty: {totalQuantity}</p>
         </div>
-
-        {/* DESCRIPTION + FEATURES */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t">
-          <div>
-            <h3 className="font-semibold mb-2">Description</h3>
-            <p className="text-gray-700">{product.description}</p>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-2">Features</h3>
-            <ul className="list-disc ml-5 text-gray-700">
-              {product.features.map((f, i) => (
-                <li key={i}>{f}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
       </div>
     </div>
-  );
+
+    {/* QUADRANT 3: DESCRIPTION + FEATURES */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t">
+      <div>
+        <h3 className="font-semibold mb-2">Description</h3>
+        <p className="text-gray-700 text-sm">{product.description}</p>
+      </div>
+      <div>
+        <h3 className="font-semibold mb-2">Features</h3>
+        <ul className="list-disc ml-5 text-gray-700 text-sm space-y-1">
+          {product.features.map((f, i) => (
+            <li key={i}>{f}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+);
 }
