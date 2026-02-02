@@ -4,10 +4,19 @@ interface Props {
   onSelect: (method: string) => void;
 }
 
+import Tooltip from "./Tooltip";
+
 export default function DecorationSelector({ methods, selected, onSelect }: Props) {
   return (
     <div>
-      <p className="uppercase text-sm font-semibold mb-2">Decoration</p>
+ 
+      <p className="uppercase text-sm font-semibold mb-2 flex items-center">
+        Decoration
+        <Tooltip
+          title="Choose a decoration type"
+          description="Select how you want your apparel decorated. We offer Screen Printing, DTF, and Embroidery, each with unique benefits depending on your design."
+        />
+      </p>
 
       <div className="flex flex-wrap gap-2">
         {methods.map((m) => {

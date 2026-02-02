@@ -1,4 +1,5 @@
 import type { InkColor } from "../types/apparel.types";
+import Tooltip from "./Tooltip";
 
 interface Props {
   inkColors: InkColor[];
@@ -33,8 +34,12 @@ export default function InkColorSelector({
 
   return (
     <div className="space-y-2">
-      <p className="uppercase text-sm font-semibold">
+      <p className="uppercase text-sm font-semibold flex items-center">
         Ink Colors (choose {maxColors})
+        <Tooltip
+          title="Ink Colors"
+          description={`Choose up to ${maxColors} ink color${maxColors > 1 ? "s" : ""} for your screen printed design.`}
+        />
       </p>
 
       <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">

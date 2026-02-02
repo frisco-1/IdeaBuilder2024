@@ -65,9 +65,13 @@ export default function ApparelDetailPage() {
             selected={decorationMethod}
             onSelect={(m) => {
               setDecorationMethod(m);
-              setDecorationVariant(null);
-              setPrintSide(null);
-              setSelectedInkColors([]); // NEW — reset ink colors
+                if (m === "DTF" || m === "Embroidery") {
+                  setDecorationVariant("single_job"); // auto-select
+                } else {
+                  setDecorationVariant(null);
+                }
+                setPrintSide(null);
+                setSelectedInkColors([]);
             }}
           />
 
@@ -89,12 +93,13 @@ export default function ApparelDetailPage() {
           )}
 
           {/* PRINT SIDE */}
-          {decorationMethod !== "Embroidery" && decorationVariant && (
+          {decorationMethod === "Screen Printing" && decorationVariant && (
             <PrintSideSelector
               selected={printSide}
               onSelect={setPrintSide}
             />
           )}
+
 
           {/* SHIRT COLOR */}
           <div>

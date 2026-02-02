@@ -85,19 +85,15 @@ export function useApparelPricing({
       // basePrice += (paintCount - 1) * 0.50;
 
     } else if (decorationMethod === "DTF") {
-      if (!printSide) return { totalPrice: 0, totalQuantity: 0 };
-
-      basePrice =
-        printSide === "1 SIDE"
-          ? tier.perOneSide ?? 0
-          : tier.perTwoSides ?? 0;
+      // DTF always uses perOneSide as the base price
+      basePrice = tier.perOneSide ?? 0;
 
       // Additional placements
       if (dtfPlacementCount > 1) {
-        const extraPlacements = dtfPlacementCount - 1;
-        basePrice += extraPlacements * (tier.additionalSide ?? 0);
+        const extra = dtfPlacementCount - 1;
+        basePrice += extra * (tier.additionalSide ?? 0);
       }
-
+      
     } else if (decorationMethod === "Embroidery") {
       basePrice = tier.perUnit ?? 0;
     }

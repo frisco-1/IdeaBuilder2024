@@ -1,3 +1,5 @@
+import Tooltip from "./Tooltip";
+
 interface Props {
   selected: "1 SIDE" | "2 SIDES" | null;
   onSelect: (side: "1 SIDE" | "2 SIDES") => void;
@@ -6,7 +8,14 @@ interface Props {
 export default function PrintSideSelector({ selected, onSelect }: Props) {
   return (
     <div>
-      <p className="uppercase text-sm font-semibold mb-2">Print Side</p>
+      
+      <p className="uppercase text-sm font-semibold mb-2 flex items-center">
+        Print Side
+        <Tooltip
+          title="Print Side"
+          description="1 Side includes either the front or back. 2 Sides includes both front and back."
+        />
+      </p>
 
       <div className="flex gap-2">
         {["1 SIDE", "2 SIDES"].map((side) => {
