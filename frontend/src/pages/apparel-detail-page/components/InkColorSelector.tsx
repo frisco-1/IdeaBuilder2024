@@ -3,9 +3,9 @@ import Tooltip from "./Tooltip";
 
 interface Props {
   inkColors: InkColor[];
-  selected: string[]; // array of hex values or keys
+  selected: string[];        // normalized selection from VariantSelector
   onSelect: (newSelection: string[]) => void;
-  maxColors: number; // 1 for 1-color, 2 for 2-color
+  maxColors: number;         // 1 or 2
 }
 
 export default function InkColorSelector({
@@ -14,49 +14,70 @@ export default function InkColorSelector({
   onSelect,
   maxColors
 }: Props) {
+
   const toggleColor = (hex: string) => {
-    // If already selected → remove it
-    if (selected.includes(hex)) {
+    const isSelected = selected.includes(hex);
+
+    // Remove color
+    if (isSelected) {
       onSelect(selected.filter((c) => c !== hex));
       return;
     }
 
-    // If selecting new color but max reached → replace last
+    // If selecting new color but max reached → replace the non-white color
     if (selected.length >= maxColors) {
+      // If white is selected, keep white and replace the other color
+      if (selected.includes("White")) {
+        const updated = ["White", hex]; // White stays, new color replaces old
+        onSelect(updated);
+        return;
+      }
+
+      // If white is NOT selected (light shirt case), replace last color
       const updated = [...selected.slice(1), hex];
       onSelect(updated);
       return;
     }
 
-    // Otherwise add normally
+    // Add normally
     onSelect([...selected, hex]);
   };
 
   return (
     <div className="space-y-2">
-      <p className="uppercase text-sm font-semibold flex items-center">
-        Ink Colors (choose {maxColors})
-        <Tooltip
-          title="Ink Colors"
-          description={`Choose up to ${maxColors} ink color${maxColors > 1 ? "s" : ""} for your screen printed design.`}
-        />
-      </p>
 
+      {/* Header with Selected text on the right */}
+      <div className="flex items-center justify-between">
+        <div className="uppercase text-sm font-semibold flex items-center">
+          Ink Colors (choose {maxColors})
+          <Tooltip
+            title="Ink Colors"
+            description={`Choose up to ${maxColors} ink color${maxColors > 1 ? "s" : ""} for your screen printed design.`}
+          />
+        </div>
+
+        <span className="text-xs text-gray-600">
+          Selected:{" "}
+          {selected.length === 0
+            ? "None"
+            : selected
+                .map((hex) => inkColors.find((c) => c.hex === hex)?.name)
+                .filter(Boolean)
+                .join(", ")}
+        </span>
+      </div>
+
+      {/* Swatches */}
       <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
         {inkColors.map((c) => {
           const isSelected = selected.includes(c.hex);
 
           return (
-            <div
-              key={c.key}
-              className="flex flex-col items-center space-y-1"
-            >
-              {/* Label */}
+            <div key={c.key} className="flex flex-col items-center space-y-1">
               <span className="text-xs font-medium text-gray-700">
                 {c.name}
               </span>
 
-              {/* Swatch */}
               <div
                 onClick={() => toggleColor(c.hex)}
                 className={`
@@ -68,17 +89,6 @@ export default function InkColorSelector({
             </div>
           );
         })}
-      </div>
-
-      {/* Selected Color Names */}
-      <div className="text-xs text-gray-600">
-        Selected:{" "}
-        {selected.length === 0
-          ? "None"
-          : selected
-              .map((hex) => inkColors.find((c) => c.hex === hex)?.name)
-              .filter(Boolean)
-              .join(", ")}
       </div>
     </div>
   );

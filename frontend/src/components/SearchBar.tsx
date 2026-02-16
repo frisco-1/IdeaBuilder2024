@@ -1,5 +1,4 @@
-// components/SearchBar.tsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
 import SearchResultsDropdown from "./SearchResultsDropdown";
@@ -13,30 +12,27 @@ export default function SearchBar() {
   const [loading, setLoading] = useState(false);
 
   const [recent, setRecent] = useState<string[]>([]);
+  const [open, setOpen] = useState(false); // ⭐ dropdown visibility
 
-  
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
   function loadRecentSearches() {
     const stored = JSON.parse(localStorage.getItem("recentSearches") || "[]");
     setRecent(stored);
   }
 
-  //removes duplicates, adds new search, saves last 5, updates local storage
   function saveRecentSearch(term: string) {
     if (!term.trim()) return;
 
     const existing = JSON.parse(localStorage.getItem("recentSearches") || "[]");
-
-    // Remove duplicates
     const filtered = existing.filter((item: string) => item !== term);
-
-    // Add new term at the top
     const updated = [term, ...filtered].slice(0, 5);
 
     localStorage.setItem("recentSearches", JSON.stringify(updated));
     setRecent(updated);
   }
 
-//Fetching results from backend
+  // Fetch search results
   useEffect(() => {
     if (!debouncedQuery.trim()) {
       setResults([]);
@@ -54,19 +50,31 @@ export default function SearchBar() {
       .finally(() => setLoading(false));
   }, [debouncedQuery]);
 
- //handles selecting result from search
+  // ⭐ Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   function handleSelectResult(result: { name: string; url: string }) {
     saveRecentSearch(result.name);
+    setOpen(false);
     window.location.href = result.url;
   }
 
-  //selecting recent search term
   function handleSelectRecent(term: string) {
     setQuery(term);
+    setOpen(false);
   }
 
   return (
-    <div className="relative w-full">
+    <div ref={wrapperRef} className="relative w-full">
       <div className="flex items-center rounded-full bg-gray-100 px-4 py-2">
         <FaSearch className="text-gray-500 mr-2 text-sm" />
 
@@ -75,19 +83,25 @@ export default function SearchBar() {
           placeholder="Search for t-shirts, hoodies, business cards, and more"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onFocus={loadRecentSearches}   
+          onFocus={() => {
+            loadRecentSearches();
+            setOpen(true); // ⭐ open dropdown on focus
+          }}
           className="w-full bg-transparent text-sm outline-none placeholder:text-gray-500"
         />
       </div>
 
-      <SearchResultsDropdown
-        loading={loading}
-        results={results}
-        query={query}
-        recent={recent}                     
-        onSelectResult={handleSelectResult} 
-        onSelectRecent={handleSelectRecent} 
-      />
+      {/* ⭐ Only show dropdown when open */}
+      {open && (
+        <SearchResultsDropdown
+          loading={loading}
+          results={results}
+          query={query}
+          recent={recent}
+          onSelectResult={handleSelectResult}
+          onSelectRecent={handleSelectRecent}
+        />
+      )}
     </div>
   );
 }

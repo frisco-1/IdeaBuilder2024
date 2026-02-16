@@ -10,13 +10,13 @@ export default function DecorationSelector({ methods, selected, onSelect }: Prop
   return (
     <div>
  
-      <p className="uppercase text-sm font-semibold mb-2 flex items-center">
+      <div className="uppercase text-sm font-semibold mb-2 flex items-center">
         Decoration
         <Tooltip
           title="Choose a decoration type"
           description="Select how you want your apparel decorated. We offer Screen Printing, DTF, and Embroidery, each with unique benefits depending on your design."
         />
-      </p>
+      </div>
 
       <div className="flex flex-wrap gap-2">
         {methods.map((m) => {

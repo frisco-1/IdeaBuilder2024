@@ -4,7 +4,14 @@
 export interface ApparelColor {
   name: string;
   hex: string;
+  views: {
+    front: string;
+    back: string;
+    side: string;
+  };
+  gallery: string[];
 }
+
 
 // ---------------------------------------------
 // INK COLORS (Screen Printing)

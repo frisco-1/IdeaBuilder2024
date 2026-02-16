@@ -93,7 +93,6 @@ export function useApparelPricing({
         const extra = dtfPlacementCount - 1;
         basePrice += extra * (tier.additionalSide ?? 0);
       }
-      
     } else if (decorationMethod === "Embroidery") {
       basePrice = tier.perUnit ?? 0;
     }

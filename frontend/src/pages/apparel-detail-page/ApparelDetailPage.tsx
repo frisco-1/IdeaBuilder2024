@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useApparelProduct } from "./hooks/useApparelProduct";
 import { useApparelPricing } from "./hooks/useApparelPricing";
+import ProductCarousel from "../../components/ProductCarousel";
+import { isDark } from "./utils/isDarkColors";
 
 import {
-  ImagePreview,
   ProductHeader,
   DecorationSelector,
   VariantSelector,
@@ -23,12 +24,44 @@ export default function ApparelDetailPage() {
   const [decorationMethod, setDecorationMethod] = useState<string | null>(null);
   const [decorationVariant, setDecorationVariant] = useState<string | null>(null);
   const [printSide, setPrintSide] = useState<"1 SIDE" | "2 SIDES" | null>(null);
+
+  // Shirt Colors
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
+
+  // Auto-select first color when product loads
+  useEffect(() => {
+    if (product && product.colors.length > 0) {
+      setSelectedColor(product.colors[0].hex);
+    }
+  }, [product]);
+
+  // Determine if shirt is dark
+  const darkShirt = selectedColor ? isDark(selectedColor) : false;
+
+  // Ink Colors
+  const [selectedInkColors, setSelectedInkColors] = useState<string[]>([]);
+
+  // ⭐ Auto-adjust for dark shirts (Screen Printing only)
+  useEffect(() => {
+    if (decorationMethod === "Screen Printing" && selectedColor) {
+      if (darkShirt) {
+        // Force 2-color
+        setDecorationVariant("2_color");
+
+        // Inject white underbase
+        setSelectedInkColors((prev) => {
+          const withoutWhite = prev.filter((c) => c !== "White");
+          return ["White", ...withoutWhite];
+        });
+      } else {
+        // Light shirt → remove white
+        setSelectedInkColors((prev) => prev.filter((c) => c !== "White"));
+      }
+    }
+  }, [decorationMethod, selectedColor, darkShirt]);
+
   const [sizeQuantities, setSizeQuantities] = useState<Record<string, number>>({});
   const [dtfPlacementCount, setDtfPlacementCount] = useState(1);
-
-  // NEW — Ink Colors
-  const [selectedInkColors, setSelectedInkColors] = useState<string[]>([]);
 
   const pricing = useApparelPricing({
     product,
@@ -37,7 +70,7 @@ export default function ApparelDetailPage() {
     printSide,
     sizeQuantities,
     dtfPlacementCount,
-    selectedInkColors, // NEW
+    selectedInkColors,
   });
 
   if (loading) return <div>Loading…</div>;
@@ -51,7 +84,11 @@ export default function ApparelDetailPage() {
 
         {/* LEFT: IMAGE */}
         <div className="flex justify-center items-start">
-          <ImagePreview />
+          <ProductCarousel
+            images={
+              product.colors.find((c) => c.hex === selectedColor)?.gallery || []
+            }
+          />
         </div>
 
         {/* RIGHT: OPTIONS */}
@@ -65,13 +102,15 @@ export default function ApparelDetailPage() {
             selected={decorationMethod}
             onSelect={(m) => {
               setDecorationMethod(m);
-                if (m === "DTF" || m === "Embroidery") {
-                  setDecorationVariant("single_job"); // auto-select
-                } else {
-                  setDecorationVariant(null);
-                }
-                setPrintSide(null);
-                setSelectedInkColors([]);
+
+              if (m === "DTF" || m === "Embroidery") {
+                setDecorationVariant("single_job");
+                setSelectedInkColors([]); // OK to reset here
+              } else {
+                setDecorationVariant(null);
+              }
+
+              setPrintSide(null);
             }}
           />
 
@@ -82,23 +121,32 @@ export default function ApparelDetailPage() {
               decorationMethod={decorationMethod}
               selected={decorationVariant}
               onSelect={(variant) => {
+                // ⭐ DO NOT reset ink colors when switching between 1-color and 2-color
                 setDecorationVariant(variant);
-                setSelectedInkColors([]); // NEW — reset when switching 1-color/2-color
               }}
               dtfPlacementCount={dtfPlacementCount}
               setDtfPlacementCount={setDtfPlacementCount}
-              selectedInkColors={selectedInkColors} // NEW
-              setSelectedInkColors={setSelectedInkColors} // NEW
+              selectedInkColors={selectedInkColors}
+              setSelectedInkColors={setSelectedInkColors}
+              lockTwoColor={darkShirt}
             />
           )}
 
-          {/* PRINT SIDE */}
-          {decorationMethod === "Screen Printing" && decorationVariant && (
-            <PrintSideSelector
-              selected={printSide}
-              onSelect={setPrintSide}
-            />
-          )}
+          {/* PRINT SIDE (Screen Printing only) */}
+          {decorationMethod === "Screen Printing" &&
+            decorationVariant &&
+            !darkShirt && (
+              <PrintSideSelector selected={printSide} onSelect={setPrintSide} />
+            )}
+
+            {/* White Underbase Badge */}
+            {decorationMethod === "Screen Printing" &&
+              darkShirt &&
+              decorationVariant === "2_color" && (
+                <div className="inline-block bg-[#E9252E]/10 text-[#E9252E] text-xs font-semibold px-3 py-1 rounded-md">
+                  White Underbase Applied
+                </div>
+              )}
 
 
           {/* SHIRT COLOR */}
@@ -106,7 +154,8 @@ export default function ApparelDetailPage() {
             <div className="flex items-center justify-between mb-2">
               <p className="uppercase text-sm font-semibold">Shirt Color</p>
               <span className="text-xs text-gray-600">
-                Selected Color: {selectedColor
+                Selected Color:{" "}
+                {selectedColor
                   ? product.colors.find((c) => c.hex === selectedColor)?.name
                   : "None"}
               </span>
@@ -121,7 +170,9 @@ export default function ApparelDetailPage() {
 
           {/* SIZES */}
           <div>
-            <p className="uppercase text-sm font-semibold mb-2">Available Sizes</p>
+            <p className="uppercase text-sm font-semibold mb-2">
+              Available Sizes
+            </p>
 
             <SizeSelector
               sizes={product.sizes}
@@ -133,15 +184,13 @@ export default function ApparelDetailPage() {
 
             {/* Minimum Order */}
             <p className="text-xs text-gray-500 mt-2">
-              Minimum Quantity Required: {
-                decorationMethod && decorationVariant
-                  ? product.decorationMethods
-                      .find(m => m.method === decorationMethod)
-                      ?.options?.[decorationVariant]?.minimumOrder ?? 0
-                  : 0
-              }
+              Minimum Quantity Required:{" "}
+              {decorationMethod && decorationVariant
+                ? product.decorationMethods.find(
+                    (m) => m.method === decorationMethod
+                  )?.options?.[decorationVariant]?.minimumOrder ?? 0
+                : 0}
             </p>
-
           </div>
 
           {/* PRICE */}
@@ -149,6 +198,15 @@ export default function ApparelDetailPage() {
             totalPrice={pricing.totalPrice}
             totalQuantity={pricing.totalQuantity}
           />
+
+          {/* Embroidery Disclaimer */}
+          {decorationMethod === "Embroidery" && (
+            <p className="text-xs text-[#E9252E] leading-snug">
+              <span className="font-semibold">Disclaimer:</span> Pricing is based
+              on one embroidery placement only. Call to inquire for more
+              embroidery positions.
+            </p>
+          )}
         </div>
       </div>
 

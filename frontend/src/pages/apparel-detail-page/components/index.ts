@@ -1,4 +1,4 @@
-export { default as ImagePreview } from "./ImagePreview";
+
 export { default as ProductHeader } from "./ProductHeader";
 export { default as DecorationSelector } from "./DecorationSelector";
 export { default as ColorSelector } from "./ColorSelector";

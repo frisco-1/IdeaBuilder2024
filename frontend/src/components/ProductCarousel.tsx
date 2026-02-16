@@ -10,7 +10,6 @@ export default function ProductCarousel({ images }: ProductCarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -19,13 +18,14 @@ export default function ProductCarousel({ images }: ProductCarouselProps) {
   useEffect(() => {
     if (!emblaApi) return;
 
-    setScrollSnaps(emblaApi.scrollSnapList());
-    emblaApi.on("select", () => setSelectedIndex(emblaApi.selectedScrollSnap()));
+    emblaApi.on("select", () =>
+      setSelectedIndex(emblaApi.selectedScrollSnap())
+    );
   }, [emblaApi]);
 
   return (
-    <div className="relative w-full">
-      {/* Viewport */}
+    <div className="relative w-full space-y-4">
+      {/* Main Carousel */}
       <div className="overflow-hidden rounded-lg shadow" ref={emblaRef}>
         <div className="flex">
           {images.map((src, i) => (
@@ -58,20 +58,29 @@ export default function ProductCarousel({ images }: ProductCarouselProps) {
         </>
       )}
 
-      {/* Dot Indicators */}
+      {/* Thumbnails */}
       {images.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-          {scrollSnaps.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => scrollTo(i)}
-              className={`w-3 h-3 rounded-full transition-opacity ${
-                selectedIndex === i
-                  ? "bg-[#E9252E] opacity-100"
-                  : "bg-[#E9252E] opacity-40"
-              }`}
-            />
-          ))}
+        <div className="flex justify-center gap-3 mt-2">
+          {images.map((src, i) => {
+            const isActive = selectedIndex === i;
+
+            return (
+              <button
+                key={i}
+                onClick={() => scrollTo(i)}
+                className={`
+                  border rounded-md overflow-hidden transition-transform
+                  ${isActive ? "border-[#E9252E] scale-105" : "border-gray-300 hover:scale-105"}
+                `}
+              >
+                <img
+                  src={src}
+                  alt={`Thumbnail ${i + 1}`}
+                  className="w-16 h-16 object-cover"
+                />
+              </button>
+            );
+          })}
         </div>
       )}
     </div>

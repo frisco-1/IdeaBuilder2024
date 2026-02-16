@@ -5,7 +5,20 @@ import mongoose from "mongoose";
 //
 const ColorSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  hex: { type: String, required: true }
+  hex: { type: String, required: true },
+
+  // Structured views for design placement
+  views: {
+    front: { type: String, required: true },
+    back: { type: String, required: true },
+    side: { type: String, required: true }
+  },
+
+  // General gallery images for carousel
+  gallery: {
+    type: [String],
+    default: []
+  }
 });
 
 //
