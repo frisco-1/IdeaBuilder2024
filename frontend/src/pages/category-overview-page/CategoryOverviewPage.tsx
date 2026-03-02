@@ -13,7 +13,7 @@ interface CategoryData {
   slug: string;
   header: string;
   description: string[];
-  images: string[]; // may contain image or video URLs
+  images: string[];
   items: CategoryItem[];
 }
 
@@ -44,7 +44,6 @@ export default function CategoryOverviewPage() {
     return <div className="p-10 text-center">Loading category…</div>;
   }
 
-  // Determine if hero media is a video
   const heroMedia = category.images[0] || "/placeholder-banner.jpg";
   const isVideo = /\.(mp4|webm|ogg)$/i.test(heroMedia);
 
@@ -84,15 +83,29 @@ export default function CategoryOverviewPage() {
         ))}
       </div>
 
-      {/* PRODUCT GRID */}
-      <div className="max-w-6xl mx-auto px-4 py-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {/* PRODUCT GRID — CustomInk Style */}
+      <div className="max-w-6xl mx-auto px-4 pb-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {category.items.map((item) => (
           <Link
             key={item.slug}
             to={`/${category.slug}/${item.slug}`}
-            className="border p-4 rounded hover:bg-[#E9252E] hover:text-white transition text-center"
+            className="group block rounded-lg overflow-hidden border bg-white shadow-sm hover:shadow-lg transition-shadow"
           >
-            {item.name}
+            {/* Image */}
+            <div className="w-full aspect-square bg-gray-100 overflow-hidden">
+              <img
+                src={item.image || "/placeholder-product.jpg"}
+                alt={item.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Name */}
+            <div className="p-4 text-center">
+              <h3 className="text-lg font-semibold text-gray-800 group-hover:text-[#E9252E] transition-colors">
+                {item.name}
+              </h3>
+            </div>
           </Link>
         ))}
       </div>
