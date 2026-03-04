@@ -76,15 +76,9 @@ export default function CategoryOverviewPage() {
         </div>
       </div>
 
-      {/* DESCRIPTION */}
-      <div className="max-w-4xl mx-auto px-4 py-10 space-y-4 text-gray-700">
-        {category.description.map((line, i) => (
-          <p key={i}>{line}</p>
-        ))}
-      </div>
 
       {/* PRODUCT GRID — CustomInk Style */}
-      <div className="max-w-6xl mx-auto px-4 pb-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div className="py-10 max-w-6xl mx-auto px-4 pb-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {category.items.map((item) => (
           <Link
             key={item.slug}
