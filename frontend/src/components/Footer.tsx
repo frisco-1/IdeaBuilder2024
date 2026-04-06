@@ -1,104 +1,175 @@
+import { Link } from "react-router-dom";
+import { AiTwotonePhone, AiFillFacebook } from "react-icons/ai";
+import { IoMdMail } from "react-icons/io";
+import { FaInstagram, FaTiktok } from "react-icons/fa";
 
-import {Container, Row, Col} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { AiTwotonePhone } from 'react-icons/ai';
-import { AiFillFacebook } from 'react-icons/ai';
-import { IoMdMail } from 'react-icons/io';
-import { FaInstagram } from "react-icons/fa";
-import { FaTiktok } from "react-icons/fa";
-import '../../styles/footer.css'
+export default function Footer() {
+  const year = new Date().getFullYear();
 
-
-function Footer() {
-  const date = new Date();
-  const year = date.getFullYear();
   return (
-    <>
-      <Container fluid id='footer'>
-        <Row>
-          <Col md={12}>
-            <h3 id='boldHeading'>Quick Links</h3>
-          </Col>
+    <footer className="bg-[#E9252E] text-white py-16">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
 
-          <Col md={4}>
-            <h5>Printing</h5>
+        {/* PRODUCT CATEGORIES */}
+        <div className="md:col-span-2">
+          <h3 className="text-xl font-bold mb-6">Product Categories</h3>
 
-             <ul className='list-unstyled'>
-              <li><Link id='footerLink'to='/business-cards' >Business Cards</Link></li>
-              <li><Link id='footerLink' to='/tickets'>Tickets</Link></li>
-              <li><Link id='footerLink' to ='/flyers'>Flyers</Link></li>
-              <li><Link id='footerLink' to='invoices'>Invoices</Link></li>
-            </ul>
-          </Col>
-          <Col md={4}>
-            <h5>Signs</h5>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
 
-            <ul className='list-unstyled'>
-              <li><Link id='footerLink' to='/magnetic-signs'>Magnetic Signs</Link></li>
-              <li><Link id='footerLink' to ='/banners'>Banners</Link></li>
-              <li><Link id='footerLink' to='/aluminum-signs'>Aluminum Signs</Link></li>
-              <li><Link id='footerLink' to='/realtor-signs'>Realtor Signs</Link></li>
-            </ul>
-          </Col>
-          <Col md={4}>
-            <h5 id='LinkHead'>Promotion Items</h5>
+            {/* Custom Apparel */}
+            <div>
+              <h4 className="font-semibold mb-3">Custom Apparel</h4>
+              <ul className="space-y-2 text-white/90">
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/custom-apparel/t-shirts" className="hover:text-white">T‑Shirts</Link>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/custom-apparel/hoodies" className="hover:text-white">Hoodies</Link>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/custom-apparel/polo-shirts" className="hover:text-white">Polo Shirts</Link>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/custom-apparel/hats" className="hover:text-white">Hats</Link>
+                </li>
+              </ul>
+            </div>
 
-            <ul className='list-unstyled'>
-              <li><Link id='footerLink' to='/pens'>Pens</Link></li>
-              <li><Link id='footerLink' to='/table-covers'>Table Covers</Link></li>
-            </ul>
-          </Col>
-          {/* line break */}
-          <Col md={12}>
-            <hr id='line-break'/>
-          </Col>
-          {/* End of line break */}
+            {/* DTF Products */}
+            <div>
+              <h4 className="font-semibold mb-3">DTF Products</h4>
+              <ul className="space-y-2 text-white/90">
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/dtf-products/dtf-gang-sheets" className="hover:text-white">DTF Gang Sheets</Link>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/dtf-products/uv-dtf-gang-sheet" className="hover:text-white">UV DTF Gang Sheet</Link>
+                </li>
+              </ul>
+            </div>
 
-          <Col md={3}>
-            <h3 id='boldHeading'>Address</h3>
+            {/* Stationery Items */}
+            <div>
+              <h4 className="font-semibold mb-3">Stationery Items</h4>
+              <ul className="space-y-2 text-white/90">
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/stationery/business-cards" className="hover:text-white">Business Cards</Link>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/stationery/flyers" className="hover:text-white">Flyers</Link>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/stationery/invoices" className="hover:text-white">Invoices</Link>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/stationery/menus" className="hover:text-white">Menus</Link>
+                </li>
+              </ul>
+            </div>
 
-            <p id='white'>3277 Lake Worth Rd. Suite B
-            Palm Springs, FL 33461</p>
-          </Col>
+            {/* Signs & Banners */}
+            <div>
+              <h4 className="font-semibold mb-3">Signs & Banners</h4>
+              <ul className="space-y-2 text-white/90">
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/signs-and-banners/banners" className="hover:text-white">Banners</Link>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/signs-and-banners/coroplast-signs" className="hover:text-white">Coroplast Signs</Link>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/signs-and-banners/a-frame" className="hover:text-white">A‑Frame</Link>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/signs-and-banners/max-metal-laminated" className="hover:text-white">Max Metal Laminated</Link>
+                </li>
+              </ul>
+            </div>
 
-          <Col md={3}>
-            <h3 id='boldHeading'>Contact Us</h3>
+            {/* Promotional Items */}
+            <div>
+              <h4 className="font-semibold mb-3">Promotional Items</h4>
+              <ul className="space-y-2 text-white/90">
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/promotional/pens" className="hover:text-white">Pens</Link>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-white">•</span>
+                  <Link to="/products/promotional/table-cover" className="hover:text-white">Table Cover</Link>
+                </li>
+              </ul>
+            </div>
 
-            <ul className='list-unstyled fs-5'>
-              <li><a href='tel:+5617211473' id='footerLink'><AiTwotonePhone/> (561) 721-1473</a></li>
-              <li><a href='mailto:sales@ideaprinting.com' id='footerLink'><IoMdMail/> sales@ideaprinting.com</a></li>
-            </ul>
-          </Col>
+          </div>
+        </div>
 
-          <Col md={3}>
-            <h3 id='boldHeading'>Social Media</h3>
+        {/* ADDRESS + HOURS */}
+        <div>
+          <h3 className="text-xl font-bold mb-6">Visit Us</h3>
+          <p className="text-white/90 leading-relaxed">
+            3277 Lake Worth Rd. Suite B<br />
+            Palm Springs, FL 33461
+          </p>
 
-            <ul className='list-unstyled'>
-              <a href='https://www.facebook.com/ideabprinting' id='footerLink' className='facebook' target='_blank' rel='noreferrer'>
-               <AiFillFacebook className='react-icon'/>
+          <h3 className="text-xl font-bold mt-8 mb-4">Hours</h3>
+          <p className="text-white/90 leading-relaxed">
+            Monday – Friday<br />
+            9:00 AM – 6:00 PM
+          </p>
+        </div>
+
+        {/* CONTACT + SOCIAL */}
+        <div>
+          <h3 className="text-xl font-bold mb-6">Contact Us</h3>
+
+          <ul className="space-y-3 text-lg text-white/90">
+            <li>
+              <a href="tel:+15617211473" className="hover:text-white flex items-center gap-2">
+                <AiTwotonePhone /> (561) 721‑1473
               </a>
-
-              <a href='https://www.instagram.com/ibtshirts/' id='footerLink' className='facebook' target='_blank' rel='noreferrer'>
-               <FaInstagram  className='react-icon'/>
+            </li>
+            <li>
+              <a href="mailto:sales@ideaprinting.com" className="hover:text-white flex items-center gap-2">
+                <IoMdMail /> sales@ideaprinting.com
               </a>
+            </li>
+          </ul>
 
-               <a href='https://www.tiktok.com/@ibtshirts' id='footerLink' className='facebook' target='_blank' rel='noreferrer'>
-               <FaTiktok   className='react-icon'/>
-              </a>
-            </ul>
-          </Col>
+          <h3 className="text-xl font-bold mt-8 mb-4">Follow Us</h3>
+          <div className="flex items-center gap-4 text-2xl">
+            <a href="https://www.facebook.com/ideabprinting" target="_blank" rel="noreferrer" className="hover:text-white">
+              <AiFillFacebook />
+            </a>
+            <a href="https://www.instagram.com/ibtshirts/" target="_blank" rel="noreferrer" className="hover:text-white">
+              <FaInstagram />
+            </a>
+            <a href="https://www.tiktok.com/@ibtshirts" target="_blank" rel="noreferrer" className="hover:text-white">
+              <FaTiktok />
+            </a>
+          </div>
+        </div>
 
-          {/* line break */}
-          <Col md={12}>
-            <hr id='line-break'/>
-          </Col>
-          {/* End of line break */}
+      </div>
 
-        </Row>
-        <span id='white'>Idea Builder</span> <span id='black'>All Rights Reserved Copyright &#169; {year}</span> 
-      </Container>
-    </>
-  )
+      {/* COPYRIGHT */}
+      <div className="text-center text-white/80 mt-12 text-sm">
+        <span className="font-semibold text-white">Idea Builder</span> — All Rights Reserved © {year}
+      </div>
+    </footer>
+  );
 }
-
-export default Footer
