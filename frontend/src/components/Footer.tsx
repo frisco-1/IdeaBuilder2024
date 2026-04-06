@@ -22,7 +22,7 @@ export default function Footer() {
               <ul className="space-y-2 text-white/90">
                 <li className="flex items-start gap-2">
                   <span className="text-white">•</span>
-                  <Link to="/products/custom-apparel/t-shirts" className="hover:text-white">T‑Shirts</Link>
+                  <Link to="/products/custom-apparel/t-shirts" className="hover:text-white">T-Shirts</Link>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-white">•</span>
