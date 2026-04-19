@@ -15,7 +15,7 @@ export default function CategoryBar() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("/api/category");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/category`);
         const data = await res.json();
 
         const formatted = Object.values(data).map((cat: any) => ({

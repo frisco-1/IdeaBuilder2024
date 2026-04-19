@@ -59,7 +59,7 @@ export default function ProductDetailPage() {
   async function fetchProduct() {
     try {
       const res = await fetch(
-        `/api/${categorySlug}/${productGroupSlug}/${productSlug}`
+        `${import.meta.env.VITE_API_URL}/api/${categorySlug}/${productGroupSlug}/${productSlug}`
       );
 
       if (!res.ok) {

@@ -19,11 +19,11 @@ const app = express();
 ---------------------------------------------- */
 const corsOptions = {
   origin: [
-    'http://localhost:4000',
-    'https://ideabprinting.com/',
-    'https://www.ideabprinting.com/',
-    'http://localhost:5173',
-    'https://willowy-blini-7d5e0b.netlify.app/'
+    "http://localhost:5173",
+    "http://localhost:4000",
+    "https://ideabprinting.com",
+    "https://www.ideabprinting.com",
+    "https://willowy-blini-7d5e0b.netlify.app"
   ],
   credentials: true,
 };

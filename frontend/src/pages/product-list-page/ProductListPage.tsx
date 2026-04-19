@@ -68,7 +68,7 @@ export default function ProductListPage() {
     async function fetchProducts() {
       try {
         const res = await fetch(
-          `/api/${categorySlug}/${productGroupSlug}`
+          `${import.meta.env.VITE_API_URL}/api/${categorySlug}/${productGroupSlug}`
         );
 
         if (!res.ok) {

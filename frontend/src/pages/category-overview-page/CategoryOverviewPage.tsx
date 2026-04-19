@@ -24,7 +24,7 @@ export default function CategoryOverviewPage() {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const res = await fetch("/api/category");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/category`);
         const data = await res.json();
 
         const found = Object.values(data).find(

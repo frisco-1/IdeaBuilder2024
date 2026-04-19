@@ -14,7 +14,7 @@ export function useApparelProduct(
     async function fetchProduct() {
       try {
         const res = await fetch(
-          `/api/custom-apparel/${productGroupSlug}/${productSlug}`
+          `${import.meta.env.VITE_API_URL}/api/custom-apparel/${productGroupSlug}/${productSlug}`
         );
         if (!res.ok) {
           setProduct(null);
