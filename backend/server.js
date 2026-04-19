@@ -23,6 +23,7 @@ const corsOptions = {
     'https://ideabprinting.com/',
     'https://www.ideabprinting.com/',
     'http://localhost:5173',
+    'https://willowy-blini-7d5e0b.netlify.app/'
   ],
   credentials: true,
 };
