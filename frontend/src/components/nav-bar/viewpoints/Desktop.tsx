@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import SearchBar from '../../SearchBar';
+// import SearchBar from '../../SearchBar';
 import HamburgerMenu from '../HamburgerMenu';
-import RightActions from '../row2-main-header/RightActions';
+// import RightActions from '../row2-main-header/RightActions';
 import CategoryBar from '../row3-category-bar/CategoryBar';
 
 function Desktop() {
@@ -25,12 +25,14 @@ function Desktop() {
         </div>
 
         {/* Center */}
-        <div className="w-full sm:max-w-xl">
+        {/* Will Add in the Search Bar Feature later on. */}
+        {/* <div className="w-full sm:max-w-xl">
           <SearchBar />
-        </div>
+        </div> */}
 
         {/* Right */}
-        <RightActions />
+        {/* Will add the user profile and shopping cart icons later. */}
+        {/* <RightActions /> */}
 
         
       </div>

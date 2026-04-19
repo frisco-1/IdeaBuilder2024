@@ -13,7 +13,10 @@ console.log("✅ BetterAuth initialized, endpoints should be active.");
 
 
 // ✅ Connect MongoClient once and reuse
-const client = new MongoClient(dbUri, { useUnifiedTopology: true });
+const client = new MongoClient(dbUri, { 
+  tls: true,
+  tlsAllowInvalidCertificates: true, // Only for development with self-signed certs
+});
 await client.connect();
 const db = client.db(); // Uses the default database specified in the URI
 

@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "../pages/home/Home.tsx";
 import SignIn from "../pages/SignInPage/SignIn";
 import ScrollToTop from "./ScrollToTop";
-import RegisterPage from "../pages/RegisterPage/RegisterPage";
+// import RegisterPage from "../pages/RegisterPage/RegisterPage";
 
 import CategoryOverviewPage from "../pages/category-overview-page/CategoryOverviewPage.tsx";
 import ProductListPage from "../pages/product-list-page/ProductListPage.tsx";
@@ -23,7 +23,8 @@ export default function Routing() {
 
         {/* AUTH */}
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/register" element={<RegisterPage />} />
+        {/* Adding the register page in a later date. */}
+        {/* <Route path="/register" element={<RegisterPage />} /> */}
 
         {/* CATEGORY OVERVIEW PAGE */}
         <Route

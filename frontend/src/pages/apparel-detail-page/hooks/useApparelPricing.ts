@@ -80,6 +80,8 @@ export function useApparelPricing({
         ? parseInt(decorationVariant.split("_")[0])
         : 1;
 
+      void paintCount;
+
       // If you ever want to charge more per ink color, add logic here.
       // Example:
       // basePrice += (paintCount - 1) * 0.50;

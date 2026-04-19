@@ -30,13 +30,13 @@ const yearsInBusiness = getYearsInBusiness();
           {/* Image */}
           <div className="relative overflow-hidden rounded-2xl">
             <img
-              src="/images/store-front.jpg"
+              src="/img/storefront.png"
               alt="Our local storefront in Lake Worth, FL"
               width={640}
               height={480}
               className="h-auto w-full object-cover"
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-foreground/60 to-transparent p-6">
+            <div className="relative bottom-0 left-0 right-0 bg-linear-to-t from-foreground/60 to-transparent p-6">
               <p className="text-lg font-semibold text-primary-foreground">
                 Since 2003
               </p>
